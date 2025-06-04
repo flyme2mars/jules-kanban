@@ -1,0 +1,104 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a; /* Dark background */
+    color: #e0e0e0; /* Light text */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.kanban-board {
+    display: flex;
+    gap: 20px; /* Spacing between columns */
+    width: 100%;
+    max-width: 1200px; /* Max width of the board */
+}
+
+.column {
+    background-color: #2c2c2c; /* Slightly lighter dark shade for columns */
+    border-radius: 8px;
+    padding: 15px;
+    width: 300px; /* Fixed width for columns */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.column h2 {
+    text-align: center;
+    color: #bb86fc; /* Accent color for headings */
+    margin-top: 0;
+    font-size: 1.5em;
+    border-bottom: 2px solid #373737; /* Separator line */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.tasks {
+    min-height: 200px; /* Minimum height for the tasks area */
+    background-color: #202020; /* Even darker background for task area */
+    border-radius: 4px;
+    padding: 10px;
+    flex-grow: 1; /* Allows this area to grow */
+    margin-bottom: 15px;
+}
+
+.task {
+    background-color: #3b3b3b; /* Darker cards for tasks */
+    color: #e0e0e0;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    cursor: grab;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-size: 0.95em;
+}
+
+.task:active {
+    cursor: grabbing;
+    background-color: #4f4f4f; /* Slightly lighter when dragging */
+}
+
+.new-task-input {
+    width: calc(100% - 22px); /* Full width minus padding */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #444; /* Dark border */
+    border-radius: 4px;
+    background-color: #252525; /* Dark input field */
+    color: #e0e0e0; /* Light text for input */
+    box-sizing: border-box;
+}
+
+.new-task-input::placeholder {
+    color: #888;
+}
+
+.add-task-btn {
+    background-color: #bb86fc; /* Accent color for button */
+    color: #1a1a1a; /* Dark text on button for contrast */
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+    width: 100%; /* Full width button */
+}
+
+.add-task-btn:hover {
+    background-color: #a06cd5; /* Slightly darker on hover */
+}
+
+/* Class to visually indicate a column is a valid drop target */
+.drag-over {
+    background-color: #333333; /* Slightly different background when dragging over */
+    border: 2px dashed #bb86fc;
+}
+
+/* Styling for the dragged item */
+.dragging {
+    opacity: 0.5;
+    transform: rotate(2deg); /* Slight tilt */
+}
