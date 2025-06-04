@@ -13,6 +13,8 @@ body {
     gap: 20px; /* Spacing between columns */
     width: 100%;
     max-width: 1200px; /* Max width of the board */
+    margin: 0 auto; /* Added for robustness in centering */
+    justify-content: center; /* Added to center columns if there's extra space */
 }
 
 .column {
@@ -101,4 +103,16 @@ body {
 .dragging {
     opacity: 0.5;
     transform: rotate(2deg); /* Slight tilt */
+}
+
+@media (max-width: 768px) {
+    .kanban-board {
+        flex-direction: column;
+        align-items: center; /* Center columns in the new flex direction */
+    }
+
+    .column {
+        width: 90%; /* Use a percentage width for responsiveness */
+        margin-bottom: 20px; /* Space out columns vertically */
+    }
 }
