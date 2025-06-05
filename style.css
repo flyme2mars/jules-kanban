@@ -4,9 +4,6 @@ body {
     color: #F0F0F0; /* Light text */
     margin: 0;
     padding: 40px; /* This padding will apply to all sides */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .kanban-board {
