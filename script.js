@@ -74,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         task.addEventListener('dragstart', handleDragStart);
         task.addEventListener('dragend', handleDragEnd);
+
+        // Touch event listeners
+        task.addEventListener('touchstart', handleTouchStart);
+        task.addEventListener('touchmove', handleTouchMove);
+        task.addEventListener('touchend', handleTouchEnd);
+
         return task;
     }
 
@@ -119,6 +125,102 @@ document.addEventListener('DOMContentLoaded', () => {
         draggedTask = null;
         columns.forEach(column => column.classList.remove('drag-over'));
         saveTasks();
+    }
+
+    // Touch event handlers
+    let initialTouchX = 0;
+    let initialTouchY = 0;
+
+    function handleTouchStart(e) {
+        // Prevent default only if the target is the task itself, not an interactive element within
+        if (e.target.classList.contains('task')) {
+            // e.preventDefault(); // Be cautious with this, might prevent text selection or other interactions if tasks become more complex
+        }
+        draggedTask = e.target;
+        if (!draggedTask.classList || !draggedTask.classList.contains('task')) {
+            draggedTask = null; // Ensure we only drag tasks
+            return;
+        }
+
+        draggedTask.classList.add('dragging');
+
+        const touch = e.touches[0];
+        initialTouchX = touch.clientX;
+        initialTouchY = touch.clientY;
+
+        // Store initial touch coordinates on the element for potential use in handleTouchMove
+        // This can be useful if you need to calculate deltas or for more complex interactions.
+        draggedTask.dataset.initialTouchX = touch.clientX;
+        draggedTask.dataset.initialTouchY = touch.clientY;
+    }
+
+    function handleTouchMove(e) {
+        if (!draggedTask) return;
+
+        e.preventDefault(); // Crucial to prevent scrolling while dragging
+
+        const touch = e.touches[0];
+        const currentX = touch.clientX;
+        const currentY = touch.clientY;
+
+        // Optional: Make the task follow the touch position visually.
+        // This is more complex as it requires changing task's position style (e.g., transform: translate)
+        // and then correctly placing it in the new column on touchend.
+        // For this implementation, we'll focus on determining the column and reordering.
+
+        // Determine the element under the touch point
+        let elementUnderTouch = document.elementFromPoint(currentX, currentY);
+        let targetColumn = null;
+
+        // Find the closest parent .column
+        while (elementUnderTouch) {
+            if (elementUnderTouch.classList && elementUnderTouch.classList.contains('column')) {
+                targetColumn = elementUnderTouch;
+                break;
+            }
+            elementUnderTouch = elementUnderTouch.parentElement;
+        }
+
+        columns.forEach(col => col.classList.remove('drag-over')); // Remove from all first
+
+        if (targetColumn) {
+            targetColumn.classList.add('drag-over');
+            const tasksContainer = targetColumn.querySelector('.tasks');
+            if (tasksContainer) {
+                const tasksInColumn = [...tasksContainer.querySelectorAll('.task:not(.dragging)')];
+                let nextTaskElement = null;
+
+                for (const task of tasksInColumn) {
+                    const rect = task.getBoundingClientRect();
+                    if (currentY < rect.top + rect.height / 2) {
+                        nextTaskElement = task;
+                        break;
+                    }
+                }
+                // Append or insert draggedTask into the target column's task container
+                if (nextTaskElement) {
+                    tasksContainer.insertBefore(draggedTask, nextTaskElement);
+                } else {
+                    tasksContainer.appendChild(draggedTask);
+                }
+            }
+        }
+    }
+
+    function handleTouchEnd(e) {
+        if (draggedTask) {
+            draggedTask.classList.remove('dragging');
+            // Clean up dataset properties if they were used
+            delete draggedTask.dataset.initialTouchX;
+            delete draggedTask.dataset.initialTouchY;
+        }
+
+        columns.forEach(column => column.classList.remove('drag-over'));
+
+        saveTasks(); // Save changes after drag operation
+        draggedTask = null;
+        initialTouchX = 0; // Reset initial touch coordinates
+        initialTouchY = 0;
     }
 
     columns.forEach(column => {
