@@ -18,10 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tasksInColumn = column.querySelectorAll('.tasks .task');
                 tasksByColumn[columnId] = [];
                 tasksInColumn.forEach(taskElement => {
-                    tasksByColumn[columnId].push({
-                        id: taskElement.id,
-                        text: taskElement.textContent
-                    });
+                    const textSpan = taskElement.querySelector('.task-text-content');
+                    if (textSpan) {
+                        tasksByColumn[columnId].push({
+                            id: taskElement.id,
+                            text: textSpan.textContent.trim()
+                        });
+                    } else {
+                        // Fallback or error handling if the structure is not as expected
+                        // This might happen if old tasks without the span are somehow still in localStorage
+                        // or if there's a bug in createTaskElement.
+                        // For now, we'll try to grab the whole textContent and hope for the best,
+                        // but ideally, this case should be handled more gracefully or logged.
+                        console.warn(`Task element with ID ${taskElement.id} is missing 'task-text-content' span. Attempting fallback text extraction.`);
+                        tasksByColumn[columnId].push({
+                            id: taskElement.id,
+                            text: taskElement.textContent.replace(/X$/, '').trim() // Try to remove trailing X
+                        });
+                    }
                 });
             });
             localStorage.setItem('kanbanData', JSON.stringify(tasksByColumn));
@@ -70,7 +84,22 @@ document.addEventListener('DOMContentLoaded', () => {
         task.classList.add('task');
         task.setAttribute('draggable', 'true');
         task.id = taskId || generateId();
-        task.textContent = taskText; // Text content is already sanitized by DOM manipulation
+
+        // Create a span for the task text
+        const textSpan = document.createElement('span');
+        textSpan.classList.add('task-text-content');
+        textSpan.textContent = taskText;
+        task.appendChild(textSpan);
+
+        const deleteBtn = document.createElement('span');
+        deleteBtn.classList.add('delete-task-btn');
+        deleteBtn.textContent = 'X';
+        deleteBtn.addEventListener('click', () => {
+            task.remove();
+            saveTasks();
+        });
+
+        task.appendChild(deleteBtn);
 
         task.addEventListener('dragstart', handleDragStart);
         task.addEventListener('dragend', handleDragEnd);

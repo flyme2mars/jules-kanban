@@ -56,6 +56,31 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     border: 1px solid #383838;
     font-size: 0.9em;
+    position: relative; /* Added for positioning delete button */
+}
+
+.delete-task-btn {
+    position: absolute;
+    top: 50%; /* Changed for vertical centering */
+    right: 5px; /* Adjusted for potentially wider padding */
+    transform: translateY(-50%); /* Added for vertical centering */
+    color: #bbb; /* Softer grey */
+    font-size: 16px;
+    font-weight: 300; /* Thinner 'X' */
+    cursor: pointer;
+    padding: 3px 6px; /* Slightly increased padding */
+    border-radius: 3px;
+    /* border: 1px solid #555; */ /* Removed border */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Removed border-color from transition */
+    display: flex; /* Added for Flexbox alignment */
+    align-items: center; /* Vertically center 'X' */
+    justify-content: center; /* Horizontally center 'X' */
+}
+
+.delete-task-btn:hover {
+    background-color: #E57373; /* Soft red background */
+    color: #fff; /* White 'X' for contrast */
+    /* border-color: #D32F2F; */ /* Removed border-color from hover */
 }
 
 .task:active {
