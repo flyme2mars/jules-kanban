@@ -133,6 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    taskInputs.forEach((inputField, index) => {
+        inputField.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission or line break
+                addTaskButtons[index].click(); // Trigger click on corresponding add button
+            }
+        });
+    });
+
     function handleDragStart(e) {
         draggedTask = e.target;
         // Basic check: Ensure it's a task being dragged
