@@ -76,7 +76,7 @@ body {
     border-radius: 3px;
     /* border: 1px solid #555; */ /* Removed border */
     transition: background-color 0.2s ease, color 0.2s ease; /* Removed border-color from transition */
-    display: flex; /* Added for Flexbox alignment */
+    display: none; /* Changed for Flexbox alignment */
     align-items: center; /* Vertically center 'X' */
     justify-content: center; /* Horizontally center 'X' */
 }
@@ -85,6 +85,10 @@ body {
     background-color: #E57373; /* Soft red background */
     color: #fff; /* White 'X' for contrast */
     /* border-color: #D32F2F; */ /* Removed border-color from hover */
+}
+
+.task:hover .delete-task-btn {
+    display: flex;
 }
 
 .task:active {
