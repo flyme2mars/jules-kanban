@@ -1,9 +1,11 @@
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-color: #0A0A0A; /* Dark background */
+    background-image: radial-gradient(ellipse at top center, #1f003f 0%, #000000 85%);
     color: #F0F0F0; /* Light text */
     margin: 0;
     padding: 40px; /* This padding will apply to all sides */
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .kanban-board {
