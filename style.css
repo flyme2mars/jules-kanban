@@ -18,12 +18,12 @@ body {
 }
 
 .column {
-    background-color: #1A1A1A; /* Slightly lighter dark shade for columns */
+    background-color: rgba(31, 0, 63, 0.15); /* Derived from body background #1f003f, with 15% opacity */
+    backdrop-filter: blur(8px);
     border-radius: 6px;
     padding: 20px;
     width: 300px; /* Fixed width for columns */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid #2A2A2A;
+    border: 1px solid rgba(255, 255, 255, 0.18); /* Increased opacity for better visibility */
     display: flex;
     flex-direction: column;
 }
@@ -43,24 +43,24 @@ body {
     min-height: 200px; /* Minimum height for the tasks area */
     max-height: 400px;
     overflow-y: auto;
-    background-color: #101010; /* Even darker background for task area */
+    background-color: rgba(31, 0, 63, 0.03); /* Very dark, very low opacity violet */
     border-radius: 6px;
     padding: 15px;
     flex-grow: 1; /* Allows this area to grow */
     margin-bottom: 15px;
     scrollbar-width: thin;
-    scrollbar-color: #555 #1A1A1A;
+    scrollbar-color: rgba(220, 200, 255, 0.2) rgba(31, 0, 63, 0.05); /* New thumb and track colors */
 }
 
 .task {
-    background-color: #282828; /* Darker cards for tasks */
+    background-color: rgba(42, 0, 80, 0.1); /* A slightly different violet hue #2a0050, with 10% opacity */
+    backdrop-filter: blur(5px); /* Slightly less intense blur than columns */
     color: #F0F0F0;
     padding: 12px;
     margin-bottom: 12px;
     border-radius: 4px;
     cursor: grab;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-    border: 1px solid #383838;
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Increased opacity for better visibility */
     font-size: 0.9em;
     position: relative; /* Added for positioning delete button */
 }
@@ -76,17 +76,18 @@ body {
     cursor: pointer;
     padding: 3px 6px; /* Slightly increased padding */
     border-radius: 3px;
-    /* border: 1px solid #555; */ /* Removed border */
-    transition: background-color 0.2s ease, color 0.2s ease; /* Removed border-color from transition */
+    background-color: transparent;
+    border: none;
+    transition: color 0.2s ease;
     display: none; /* Changed for Flexbox alignment */
     align-items: center; /* Vertically center 'X' */
     justify-content: center; /* Horizontally center 'X' */
 }
 
 .delete-task-btn:hover {
-    background-color: #E57373; /* Soft red background */
+    background-color: transparent;
+    border: none; /* Ensure no border on hover */
     color: #fff; /* White 'X' for contrast */
-    /* border-color: #D32F2F; */ /* Removed border-color from hover */
 }
 
 .task:hover .delete-task-btn {
@@ -102,17 +103,16 @@ body {
     width: 100%; /* Full width minus padding */
     padding: 12px;
     margin-bottom: 10px;
-    border: 1px solid #333; /* Dark border */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Increased opacity */
     border-radius: 4px;
-    background-color: #1E1E1E; /* Dark input field */
+    background-color: rgba(31, 0, 63, 0.05); /* Very subtle, low opacity dark violet */
     color: #F0F0F0; /* Light text for input */
     box-sizing: border-box;
-    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .new-task-input:focus {
-    border-color: #E0E0E0;
-    box-shadow: 0 0 0 2px rgba(224, 224, 224, 0.2);
+    border-color: rgba(255, 255, 255, 0.45); /* Increased opacity for focus border */
 }
 
 .new-task-input::placeholder {
@@ -120,29 +120,32 @@ body {
 }
 
 .add-task-btn {
-    background-color: #2D2D2D; /* Accent color for button */
+    background-color: rgba(42, 0, 80, 0.12); /* Slightly more opaque than inputs, task card violet hue, 12% opacity */
+    backdrop-filter: blur(3px);
     color: #F0F0F0; /* Dark text on button for contrast */
-    border: 1px solid #4D4D4D;
+    border: 1px solid rgba(255, 255, 255, 0.22); /* Increased base opacity */
     padding: 12px 18px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
     width: 100%; /* Full width button */
 }
 
 .add-task-btn:hover {
-    background-color: #3D3D3D; /* Slightly darker on hover */
+    background-color: rgba(42, 0, 80, 0.2); /* Increase opacity on hover */
+    border-color: rgba(255, 255, 255, 0.3); /* Increased hover opacity */
 }
 
 .add-task-btn:active {
     transform: translateY(1px);
-    background-color: #1E1E1E;
+    background-color: rgba(42, 0, 80, 0.08); /* Slightly less opaque for glassy press */
 }
 
 .add-task-btn:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(224, 224, 224, 0.3);
+    background-color: rgba(42, 0, 80, 0.18); /* Distinct from hover */
+    border-color: rgba(255, 255, 255, 0.35); /* Increased focus opacity */
 }
 
 /* Class to visually indicate a column is a valid drop target */
@@ -190,16 +193,16 @@ h1 {
 }
 
 .tasks::-webkit-scrollbar-track {
-  background: #1A1A1A; /* Matches column background */
+  background: rgba(31, 0, 63, 0.05); /* Matching input field background */
   border-radius: 4px;
 }
 
 .tasks::-webkit-scrollbar-thumb {
-  background-color: #555; /* A mid-grey for the thumb */
+  background-color: rgba(220, 200, 255, 0.2); /* Light, semi-transparent violet-tinted white */
   border-radius: 4px;
-  border: 2px solid #1A1A1A; /* Padding effect around thumb */
+  border: 2px solid rgba(31, 0, 63, 0.05); /* Use new track color for border */
 }
 
 .tasks::-webkit-scrollbar-thumb:hover {
-  background-color: #777; /* Lighter grey on hover */
+  background-color: rgba(220, 200, 255, 0.3); /* Slightly more opaque on hover */
 }
