@@ -162,6 +162,8 @@ body {
 
 @media (max-width: 768px) {
     body {
+        background-image: none; /* Remove the gradient */
+        background-color: #0A0A0A; /* Apply a solid dark background */
         padding: 20px;
     }
 
@@ -174,6 +176,63 @@ body {
     .column {
         width: 90%; /* Use a percentage width for responsiveness */
         margin-bottom: 20px; /* Space out columns vertically */
+        background-color: #1A1225; /* Solid dark violet/purple */
+        backdrop-filter: none; /* Remove blur effect */
+        border: 1px solid #2A2035; /* Subtly visible solid border */
+    }
+
+    .task {
+        background-color: #281A38; /* Solid dark violet, slightly different from column */
+        backdrop-filter: none; /* Remove blur effect */
+        border: 1px solid #3D2C4F; /* Subtly visible solid border */
+    }
+
+    .new-task-input {
+        background-color: #150C20; /* Solid very dark violet for input background */
+        border: 1px solid #2A2035; /* Matching mobile column border for consistency */
+    }
+
+    .new-task-input:focus {
+        border-color: #4A3B5C; /* A lighter violet for focus border */
+    }
+
+    .add-task-btn {
+        background-color: #281A38; /* Matching mobile task card background */
+        backdrop-filter: none; /* Remove blur effect */
+        border: 1px solid #3D2C4F; /* Matching mobile task card border */
+    }
+
+    .add-task-btn:hover {
+        background-color: #3D2C4F; /* Darken background on hover */
+        border-color: #504060; /* Slightly lighter border on hover */
+    }
+
+    .add-task-btn:active {
+        background-color: #1E1526; /* Even darker for active state */
+    }
+
+    .add-task-btn:focus {
+        background-color: #352545; /* Specific focus background */
+        border-color: #504060; /* Consistent focus border color */
+    }
+
+    .tasks {
+        background-color: #100815; /* Solid very dark base for tasks area */
+        /* Update scrollbar-color for Firefox */
+        scrollbar-color: #4A3B5C #1A1225; /* Thumb: Lighter violet, Track: Dark violet (matching column bg) */
+    }
+
+    .tasks::-webkit-scrollbar-track {
+        background: #1A1225; /* Solid dark violet (matching mobile column bg) */
+    }
+
+    .tasks::-webkit-scrollbar-thumb {
+        background-color: #4A3B5C; /* Solid lighter violet */
+        border: 2px solid #1A1225; /* Border matching the new track color */
+    }
+
+    .tasks::-webkit-scrollbar-thumb:hover {
+        background-color: #5A4B6C; /* Slightly brighter/lighter on hover */
     }
 }
 
