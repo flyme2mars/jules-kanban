@@ -90,8 +90,61 @@ body {
     color: #fff; /* White 'X' for contrast */
 }
 
-.task:hover .delete-task-btn {
+.task:hover .delete-task-btn,
+.task:hover .edit-task-btn {
     display: flex;
+}
+
+.edit-task-btn {
+    position: absolute;
+    top: 50%;
+    right: 30px; /* Position next to delete button */
+    transform: translateY(-50%);
+    color: #bbb;
+    font-size: 14px; /* Slightly smaller to differentiate or match delete */
+    font-weight: 300;
+    cursor: pointer;
+    padding: 3px 6px;
+    border-radius: 3px;
+    background-color: transparent;
+    border: none;
+    transition: color 0.2s ease;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-task-btn:hover {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+.edit-task-input {
+    width: calc(100% - 50px); /* Adjust width to leave space for buttons */
+    padding: 8px;
+    margin: -8px 0; /* Adjust margin to fit nicely */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    background-color: rgba(31, 0, 63, 0.1); /* Similar to new-task-input */
+    color: #F0F0F0;
+    box-sizing: border-box;
+    font-family: inherit; /* Inherit font from task */
+    font-size: inherit; /* Inherit font size from task */
+}
+
+.edit-task-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* Adjust delete button position if edit button is present */
+.task .delete-task-btn {
+    right: 5px; /* Original position */
+}
+
+.task.editing .task-text-content {
+    display: none; /* Hide original text when editing */
 }
 
 .task:active {
