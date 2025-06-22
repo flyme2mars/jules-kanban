@@ -93,35 +93,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const editBtn = document.createElement('span');
         editBtn.classList.add('edit-task-btn');
-        editBtn.textContent = 'Edit'; // Or use an icon
+        editBtn.innerHTML = '&#9998;'; // Pencil icon
         editBtn.addEventListener('click', () => {
             if (task.classList.contains('editing')) {
                 // Currently in edit mode, so save
-                const inputField = task.querySelector('.edit-task-input');
-                textSpan.textContent = inputField.value;
-                task.replaceChild(textSpan, inputField);
+                const textarea = task.querySelector('.edit-task-textarea');
+                textSpan.textContent = textarea.value;
+                task.replaceChild(textSpan, textarea);
                 task.classList.remove('editing');
-                editBtn.textContent = 'Edit';
+                task.classList.remove('task-editing-state'); // Remove state class
+                editBtn.innerHTML = '&#9998;'; // Pencil icon
+                deleteBtn.style.display = ''; // Restore default display behavior for delete button
                 task.setAttribute('draggable', 'true'); // Re-enable dragging
                 saveTasks();
             } else {
                 // Not in edit mode, so switch to edit
                 const currentText = textSpan.textContent;
-                const inputField = document.createElement('input');
-                inputField.type = 'text';
-                inputField.classList.add('edit-task-input');
-                inputField.value = currentText;
-                task.replaceChild(inputField, textSpan);
+                const textarea = document.createElement('textarea');
+                textarea.classList.add('edit-task-textarea');
+                textarea.value = currentText;
+                task.replaceChild(textarea, textSpan);
                 task.classList.add('editing');
-                editBtn.textContent = 'Save';
+                task.classList.add('task-editing-state'); // Add state class
+                editBtn.innerHTML = '&#10004;'; // Checkmark icon for Save
+                deleteBtn.style.display = 'none'; // Hide delete button
                 task.setAttribute('draggable', 'false'); // Disable dragging while editing
-                inputField.focus();
-                // Optional: Save on Enter key press
-                inputField.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        editBtn.click(); // Simulate click on save button
-                    }
+                textarea.focus();
+                // Auto-adjust textarea height
+                textarea.style.height = 'auto';
+                textarea.style.height = (textarea.scrollHeight) + 'px';
+                textarea.addEventListener('input', () => {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = (textarea.scrollHeight) + 'px';
                 });
+                // Optional: Save on Ctrl+Enter or a dedicated save button might be better for textareas
+                // For now, we'll rely on the "Save" button click.
             }
         });
 
