@@ -98,45 +98,145 @@ body {
 .edit-task-btn {
     position: absolute;
     top: 50%;
-    right: 30px; /* Position next to delete button */
+    right: 45px;
     transform: translateY(-50%);
-    color: #bbb;
-    font-size: 14px; /* Slightly smaller to differentiate or match delete */
+    color: #54A0FF; /* Blue theme for Edit */
+    font-size: 16px;
     font-weight: 300;
     cursor: pointer;
-    padding: 3px 6px;
-    border-radius: 3px;
-    background-color: transparent;
-    border: none;
-    transition: color 0.2s ease;
+    padding: 5px 8px;
+    border-radius: 4px;
+    background-color: rgba(84, 160, 255, 0.1); /* Base for glass effect - blue tint */
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(84, 160, 255, 0.2);
+    line-height: 1;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
     display: none;
     align-items: center;
     justify-content: center;
+    opacity: 0;
 }
 
+/* Save button style (when .edit-task-btn is in save mode via .editing class on task) */
+.task.editing .edit-task-btn {
+    color: #2ECC71; /* Green theme for Save */
+    background-color: rgba(46, 204, 113, 0.1); /* Green tint for glass bg */
+    border-color: rgba(46, 204, 113, 0.2);
+}
+
+.task:hover .edit-task-btn:not(.task.editing .edit-task-btn), /* Edit hover */
+.task:hover .delete-task-btn {
+    display: flex;
+    opacity: 1;
+}
+/* Special display rule for save button as it's always visible in edit mode */
+.task.editing .edit-task-btn {
+    display: flex;
+    opacity: 1;
+}
+
+
+/* Edit button hover */
 .edit-task-btn:hover {
-    background-color: transparent;
-    border: none;
-    color: #fff;
+    color: #77b5fe; /* Lighter blue for hover */
+    background-color: rgba(84, 160, 255, 0.2);
+    border-color: rgba(84, 160, 255, 0.4);
 }
 
-.edit-task-input {
-    width: calc(100% - 50px); /* Adjust width to leave space for buttons */
+/* Save button hover (when .edit-task-btn is in save mode) */
+.task.editing .edit-task-btn:hover {
+    color: #58D68D; /* Lighter green for hover */
+    background-color: rgba(46, 204, 113, 0.2);
+    border-color: rgba(46, 204, 113, 0.4);
+}
+
+
+/* Delete button styling */
+.delete-task-btn {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    color: #FF6B6B; /* Red theme for Delete */
+    font-size: 16px;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 107, 107, 0.1); /* Red tint for glass bg */
+    backdrop-filter: blur(3px);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    line-height: 1;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.delete-task-btn:hover {
+    color: #ff8686; /* Lighter red for hover */
+    background-color: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.4);
+}
+
+/* Hide delete button when task is in editing state (JS also helps, this is a CSS backup) */
+.task.task-editing-state .delete-task-btn {
+    display: none !important; /* Ensure it's hidden */
+    opacity: 0 !important;
+}
+
+
+.edit-task-textarea {
+    width: calc(100% - 10px); /* Give a little space, buttons are absolute */
     padding: 8px;
-    margin: -8px 0; /* Adjust margin to fit nicely */
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0; /* Reset margin, position within task */
+    border: 1px solid transparent; /* Initially transparent border */
     border-radius: 3px;
-    background-color: rgba(31, 0, 63, 0.1); /* Similar to new-task-input */
+    background-color: rgba(42, 0, 80, 0.25); /* Slightly more opaque than task bg for visibility */
     color: #F0F0F0;
     box-sizing: border-box;
-    font-family: inherit; /* Inherit font from task */
-    font-size: inherit; /* Inherit font size from task */
+    font-family: inherit;
+    font-size: inherit;
+    resize: vertical;
+    min-height: 40px;
+    line-height: 1.4;
+    overflow-y: hidden;
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, width 0.2s ease-in-out; /* Added width transition */
+    flex-grow: 1; /* Allow textarea to take available space in flex container */
 }
 
-.edit-task-input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.45);
+/* Styles for when task is in editing mode */
+.task.editing {
+    display: flex; /* Use flexbox for textarea and save button alignment */
+    align-items: flex-start; /* Align items to the top, good for multi-line textarea */
+    padding-right: 5px; /* Add some padding to the task itself if button is inside */
 }
+
+.task.editing .edit-task-textarea {
+    width: calc(100% - 55px); /* Reduce width to make space for the save button + margin */
+    margin-right: 10px; /* Add some margin between textarea and save button */
+}
+
+.task.editing .edit-task-btn {
+    position: relative; /* Override absolute positioning */
+    right: auto;
+    top: auto;
+    transform: none; /* Reset transform */
+    flex-shrink: 0; /* Prevent button from shrinking */
+    /* Vertically center button with the first line of textarea, or adjust as needed */
+    /* This might need fine-tuning depending on exact line-heights and padding */
+    margin-top: 8px; /* Approximate alignment with first line of text based on padding */
+}
+
+
+.edit-task-textarea:focus {
+    outline: none; /* Remove default browser outline */
+    border-color: rgba(220, 200, 255, 0.35); /* Subtle violet-tinted focus border */
+    background-color: rgba(42, 0, 80, 0.35); /* Slightly darker on focus */
+    box-shadow: 0 0 5px rgba(220, 200, 255, 0.1); /* Soft glow effect */
+}
+
 
 /* Adjust delete button position if edit button is present */
 .task .delete-task-btn {
