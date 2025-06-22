@@ -91,6 +91,40 @@ document.addEventListener('DOMContentLoaded', () => {
         textSpan.textContent = taskText;
         task.appendChild(textSpan);
 
+        const editBtn = document.createElement('span');
+        editBtn.classList.add('edit-task-btn');
+        editBtn.textContent = 'Edit'; // Or use an icon
+        editBtn.addEventListener('click', () => {
+            if (task.classList.contains('editing')) {
+                // Currently in edit mode, so save
+                const inputField = task.querySelector('.edit-task-input');
+                textSpan.textContent = inputField.value;
+                task.replaceChild(textSpan, inputField);
+                task.classList.remove('editing');
+                editBtn.textContent = 'Edit';
+                task.setAttribute('draggable', 'true'); // Re-enable dragging
+                saveTasks();
+            } else {
+                // Not in edit mode, so switch to edit
+                const currentText = textSpan.textContent;
+                const inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.classList.add('edit-task-input');
+                inputField.value = currentText;
+                task.replaceChild(inputField, textSpan);
+                task.classList.add('editing');
+                editBtn.textContent = 'Save';
+                task.setAttribute('draggable', 'false'); // Disable dragging while editing
+                inputField.focus();
+                // Optional: Save on Enter key press
+                inputField.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        editBtn.click(); // Simulate click on save button
+                    }
+                });
+            }
+        });
+
         const deleteBtn = document.createElement('span');
         deleteBtn.classList.add('delete-task-btn');
         deleteBtn.textContent = 'X';
@@ -99,9 +133,16 @@ document.addEventListener('DOMContentLoaded', () => {
             saveTasks();
         });
 
+        task.appendChild(editBtn);
         task.appendChild(deleteBtn);
 
-        task.addEventListener('dragstart', handleDragStart);
+        task.addEventListener('dragstart', (e) => {
+            if (task.classList.contains('editing')) {
+                e.preventDefault(); // Prevent dragging if in edit mode
+                return;
+            }
+            handleDragStart(e);
+        });
         task.addEventListener('dragend', handleDragEnd);
 
         // Touch event listeners
