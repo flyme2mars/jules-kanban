@@ -392,6 +392,7 @@ body {
 h1 {
     color: #E0E0E0;
     font-size: 2.5em;
+    margin-top: 60px; /* Add margin to prevent overlap with fixed switch */
     text-align: center;
     margin-bottom: 30px;
     font-weight: bold;
@@ -417,4 +418,239 @@ h1 {
 
 .tasks::-webkit-scrollbar-thumb:hover {
   background-color: rgba(220, 200, 255, 0.3); /* Slightly more opaque on hover */
+}
+
+/* Theme Switch Styles */
+.theme-switch-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3; /* Blue when checked (light mode) */
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Style for dark mode (default) */
+body:not(.light-mode) .slider {
+    background-color: #555; /* Darker background for the switch in dark mode */
+}
+
+body:not(.light-mode) input:checked + .slider {
+    background-color: #777; /* Slightly lighter dark background when "on" but still dark overall */
+}
+
+body:not(.light-mode) .slider:before {
+    background-color: #ddd; /* Lighter nub for dark mode */
+}
+
+/* Specific style for the sun/moon icons if we add them later, or for the nub color in light/dark */
+/* For now, we'll adjust the nub for light mode when .light-mode is active on body */
+body.light-mode .slider {
+    background-color: #ccc; /* Standard light mode off */
+}
+body.light-mode input:checked + .slider {
+    background-color: #2196F3; /* Standard light mode on */
+}
+body.light-mode .slider:before {
+    background-color: white; /* Standard light mode nub */
+}
+
+/* Light Theme Styles */
+body.light-mode {
+    background-image: radial-gradient(ellipse at top center, #e0e0e0 0%, #ffffff 85%); /* Light grey to white */
+    color: #333333; /* Dark text */
+}
+
+body.light-mode h1 {
+    color: #222222; /* Darker heading text */
+}
+
+body.light-mode .column {
+    background-color: rgba(255, 255, 255, 0.3); /* Light glass effect */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle dark border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Softer shadow for light mode */
+}
+
+body.light-mode .column h2 {
+    color: #444444; /* Dark grey for column titles */
+    border-bottom: 1px solid #dddddd; /* Lighter separator line */
+}
+
+body.light-mode .tasks {
+    background-color: rgba(255, 255, 255, 0.15); /* Lighter, very subtle glass for tasks area */
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(255, 255, 255, 0.1); /* Darker thumb, lighter track */
+}
+
+body.light-mode .task {
+    background-color: rgba(255, 255, 255, 0.5); /* Light glass for tasks */
+    backdrop-filter: blur(8px);
+    color: #333333; /* Dark text for tasks */
+    border: 1px solid rgba(0, 0, 0, 0.12); /* Subtle dark border for tasks */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* Softer shadow for tasks */
+}
+
+body.light-mode .new-task-input {
+    background-color: rgba(255, 255, 255, 0.4); /* Light background for input */
+    color: #333333; /* Dark text */
+    border: 1px solid rgba(0, 0, 0, 0.15); /* Subtle dark border */
+}
+
+body.light-mode .new-task-input::placeholder {
+    color: #888888; /* Slightly darker placeholder for light mode */
+}
+
+body.light-mode .new-task-input:focus {
+    border-color: rgba(0, 0, 0, 0.3); /* Darker border on focus */
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+body.light-mode .add-task-btn {
+    background-color: rgba(240, 240, 240, 0.6); /* Light, slightly opaque button */
+    backdrop-filter: blur(5px);
+    color: #333333; /* Dark text */
+    border: 1px solid rgba(0, 0, 0, 0.15); /* Subtle dark border */
+}
+
+body.light-mode .add-task-btn:hover {
+    background-color: rgba(230, 230, 230, 0.7);
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+body.light-mode .add-task-btn:active {
+    background-color: rgba(220, 220, 220, 0.7);
+    transform: translateY(1px);
+}
+
+body.light-mode .add-task-btn:focus {
+    outline: none;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2); /* Light blue focus ring, common in light themes */
+}
+
+/* Scrollbar styling for light mode (Webkit) */
+body.light-mode .tasks::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05); /* Very light track */
+}
+
+body.light-mode .tasks::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Darker thumb */
+  border: 2px solid rgba(0, 0, 0, 0.05); /* Match track color for border */
+}
+
+body.light-mode .tasks::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4); /* Slightly darker on hover */
+}
+
+/* Light theme styles for task interactive elements */
+body.light-mode .task:active {
+    cursor: grabbing;
+    background-color: rgba(240, 240, 240, 0.7); /* Lighter grey when dragging in light mode */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .task .edit-task-btn {
+    color: #007bff; /* Standard blue for edit */
+    background-color: rgba(0, 123, 255, 0.1);
+    border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+body.light-mode .task .edit-task-btn:hover {
+    color: #0056b3; /* Darker blue on hover */
+    background-color: rgba(0, 123, 255, 0.2);
+    border-color: rgba(0, 123, 255, 0.4);
+}
+
+body.light-mode .task.editing .edit-task-btn { /* Save button in light mode */
+    color: #28a745; /* Standard green for save */
+    background-color: rgba(40, 167, 69, 0.1);
+    border-color: rgba(40, 167, 69, 0.2);
+}
+
+body.light-mode .task.editing .edit-task-btn:hover {
+    color: #1e7e34; /* Darker green on hover */
+    background-color: rgba(40, 167, 69, 0.2);
+    border-color: rgba(40, 167, 69, 0.4);
+}
+
+body.light-mode .task .delete-task-btn {
+    color: #dc3545; /* Standard red for delete */
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+body.light-mode .task .delete-task-btn:hover {
+    color: #c82333; /* Darker red on hover */
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.4);
+}
+
+body.light-mode .edit-task-textarea {
+    background-color: rgba(255, 255, 255, 0.7); /* Lighter textarea background */
+    color: #333333; /* Dark text */
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+body.light-mode .edit-task-textarea:focus {
+    border-color: rgba(0, 123, 255, 0.5); /* Blue focus border */
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.15);
+}
+
+body.light-mode .drag-over {
+    background-color: rgba(0, 0, 0, 0.05); /* Very subtle dark overlay */
+    border: 2px dashed #888888; /* Dashed grey border */
+}
+
+body.light-mode .dragging {
+    opacity: 0.7;
+    background-color: rgba(250, 250, 250, 0.8); /* Slightly off-white when dragging */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
