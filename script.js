@@ -3,8 +3,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInputs = document.querySelectorAll('.new-task-input');
     const columnsTasksContainers = document.querySelectorAll('.column .tasks');
     const columns = document.querySelectorAll('.column');
+    const themeSwitch = document.getElementById('theme-switch-checkbox');
+    const bodyElement = document.body;
 
     let draggedTask = null;
+
+    // Theme switching logic
+    function setTheme(isLightMode) {
+        if (isLightMode) {
+            bodyElement.classList.add('light-mode');
+            themeSwitch.checked = true;
+            localStorage.setItem('theme', 'light');
+        } else {
+            bodyElement.classList.remove('light-mode');
+            themeSwitch.checked = false;
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    themeSwitch.addEventListener('change', () => {
+        setTheme(themeSwitch.checked);
+    });
+
+    // Load saved theme preference or default to dark
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        setTheme(true);
+    } else {
+        setTheme(false); // Default to dark mode if no preference or preference is 'dark'
+    }
 
     function generateId() {
         return `task-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
