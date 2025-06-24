@@ -1,0 +1,218 @@
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-image: radial-gradient(ellipse at top center, #1f003f 0%, #000000 85%);
+    color: #F0F0F0; /* Light text */
+    margin: 0;
+    padding: 40px; /* This padding will apply to all sides */
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* GENERAL h1 STYLING - Board specific H1s (like board name) are in board.css */
+/* Main page specific H1 (page-title) is in main.css */
+h1 {
+    color: #E0E0E0;
+    font-size: 2.5em; /* Default size, can be overridden */
+    text-align: center;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-top: 20px; /* Basic default margins */
+    margin-bottom: 20px;
+}
+
+
+/* Theme Switch Styles - Global as it appears on multiple pages */
+.theme-switch-container {
+    /* These specific positioning rules are now handled by .top-bar-container (board.css)
+       or direct placement in main.html (styled by main.css) if different.
+       The component itself is globally styled here. */
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Reduced width */
+    height: 28px; /* Reduced height */
+}
+
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(204, 204, 204, 0.3); /* Light grey with alpha for glass base */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: .4s;
+    border-radius: 28px; /* Adjusted border-radius */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px; /* Reduced nub height */
+    width: 20px;  /* Reduced nub width */
+    left: 3px;    /* Adjusted nub position */
+    bottom: 3px;  /* Adjusted nub position */
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    z-index: 1; /* Ensure nub is above icons */
+}
+
+/* Icons inside the slider */
+.slider .icon {
+    position: absolute;
+    top: 50%; /* Default for sun */
+    transform: translateY(-50%); /* Default for sun */
+    width: 16px; /* Icon size */
+    height: 16px;
+    pointer-events: none; /* So they don't interfere with clicks */
+    transition: opacity 0.3s ease, color 0.3s ease;
+    z-index: 0; /* Below the nub */
+}
+
+.slider .sun-icon {
+    left: 5px; /* Position on the left */
+    /* Default state (switch OFF, dark mode selected): Sun is hidden, but color if it were visible */
+    color: #FFD700; /* Gold for sun */
+    opacity: 0;
+}
+
+.slider .moon-icon {
+    right: 5px; /* Position on the right */
+    /* Default state (switch OFF, dark mode selected): Moon is visible */
+    color: #b0c4de; /* LightSteelBlue for moon */
+    opacity: 1;
+    transform: translateY(-51%); /* Nudge moon icon up slightly */
+}
+
+/* Styles based on checkbox state (determines which icon is conceptually 'active') */
+/* When switch is ON (light mode selected) */
+input:checked + .slider .sun-icon {
+    opacity: 1; /* Show sun */
+}
+input:checked + .slider .moon-icon {
+    opacity: 0; /* Hide moon */
+}
+
+/* When switch is OFF (dark mode selected) - this is the default state of icons */
+input:not(:checked) + .slider .sun-icon {
+    opacity: 0; /* Hide sun */
+}
+input:not(:checked) + .slider .moon-icon {
+    opacity: 1; /* Show moon */
+}
+
+
+/* Slider background color based on checkbox state */
+input:checked + .slider { /* Light mode selected */
+    background-color: rgba(255, 235, 205, 0.5); /* SeaShell/Very Light Peach-Gold glass */
+    border-color: rgba(210, 180, 140, 0.4); /* Tan border, subtle */
+}
+
+input:not(:checked) + .slider { /* Dark mode selected - this is the default slider bg */
+    /* This will be overridden by body:not(.light-mode) .theme-switch .slider for initial dark theme load */
+    /* And by body.light-mode .theme-switch .slider if light theme is active but switch is toggled to dark */
+}
+
+
+input:focus + .slider {
+    box-shadow: 0 0 2px rgba(210, 180, 140, 0.7); /* Focus consistent with new 'on' color */
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px); /* Adjusted transform for new size */
+}
+
+/* Theme-specific overrides for icon colors and slider background */
+
+/* === DARK THEME (body:not(.light-mode)) === */
+body:not(.light-mode) .theme-switch .slider { /* Default slider bg in dark mode (switch OFF) */
+    background-color: rgba(85, 85, 85, 0.4); /* Darker glass base */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider .moon-icon { /* Moon icon when dark mode is active & selected */
+    color: #b0c4de; /* LightSteelBlue */
+    opacity: 1;
+}
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun icon when dark mode is active & selected (should be hidden) */
+    opacity: 0;
+}
+body:not(.light-mode) .theme-switch input:checked + .slider { /* Slider bg in dark mode when switch is ON (light mode selected) */
+    background-color: rgba(255, 235, 205, 0.5); /* SeaShell/Very Light Peach-Gold glass */
+    border-color: rgba(210, 180, 140, 0.4);
+}
+body:not(.light-mode) .theme-switch input:checked + .slider .sun-icon { /* Sun icon when dark mode is active BUT light mode selected */
+    color: #FFD700; /* Gold */
+    opacity: 1;
+}
+body:not(.light-mode) .theme-switch input:checked + .slider .moon-icon { /* Moon icon when dark mode is active BUT light mode selected (should be hidden) */
+    opacity: 0;
+}
+body:not(.light-mode) .theme-switch .slider:before { /* Nub color in dark mode (when dark theme is selected) */
+    background-color: rgba(180, 180, 180, 0.75); /* Darker, more transparent grey */
+    box-shadow: 0 0 2px rgba(0,0,0,0.3); /* Slightly adjusted shadow for new nub color */
+}
+body:not(.light-mode) .theme-switch input:checked + .slider:before { /* Nub when light is selected, still in dark body theme context */
+    background-color: rgba(235, 235, 235, 0.85); /* Slightly less stark white for this transitional state */
+}
+
+
+/* === LIGHT THEME (body.light-mode) === */
+body.light-mode .theme-switch .slider { /* Default slider bg in light mode (switch ON for light) */
+    /* This is when light mode is selected (checkbox is checked) */
+    background-color: rgba(255, 235, 205, 0.6); /* SeaShell/Very Light Peach-Gold glass - slightly more opaque */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(210, 180, 140, 0.4); /* Tan border */
+}
+body.light-mode .theme-switch input:checked + .slider .sun-icon { /* Sun icon when light mode is active & selected */
+    color: #e68a00; /* Darker Gold / Orange for better contrast on light bg */
+    opacity: 1;
+}
+body.light-mode .theme-switch input:checked + .slider .moon-icon { /* Moon icon when light mode is active & selected (should be hidden) */
+    opacity: 0;
+}
+
+body.light-mode .theme-switch input:not(:checked) + .slider { /* Slider bg in light mode when switch is OFF (dark mode selected) */
+    background-color: rgba(130, 130, 130, 0.4); /* Mid-tone grey glass for 'off' state in light mode */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+body.light-mode .theme-switch input:not(:checked) + .slider .moon-icon { /* Moon icon when light mode is active BUT dark mode selected */
+    color: #333a45; /* Darker slate gray for moon on light bg */
+    opacity: 1;
+}
+body.light-mode .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun icon when light mode is active BUT dark mode selected (should be hidden) */
+    opacity: 0;
+}
+
+body.light-mode .theme-switch .slider:before { /* Nub color in light mode (when light is selected by default with this body class) */
+    background-color: rgba(255, 255, 255, 0.95);
+}
+body.light-mode .theme-switch input:not(:checked) + .slider:before { /* Nub when dark is selected, still in light body theme context */
+    background-color: rgba(240, 240, 240, 0.9);
+}
+
+/* Light Theme Styles */
+body.light-mode {
+    background-image: radial-gradient(ellipse at top center, #e0e0e0 0%, #ffffff 85%); /* Light grey to white */
+    color: #333333; /* Dark text */
+}
+
+body.light-mode h1 { /* General light mode h1 */
+    color: #222222; /* Darker heading text */
+}
+
+/* Specific light mode overrides for .column, .task, .new-task-input etc. are now in board.css */
+/* Specific light mode overrides for .page-title, #create-board-btn etc. are now in main.css */
