@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanban Board</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Jules Kanban - Home</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
     <div class="theme-switch-container">
@@ -20,27 +21,46 @@
             </div>
         </label>
     </div>
-    <h1>Jules Kanban</h1>
-    <div class="kanban-board">
-        <div class="column" id="todo">
-            <h2>To Do</h2>
-            <div class="tasks"></div>
-            <input type="text" class="new-task-input" placeholder="Add new task...">
-            <button class="add-task-btn">Add Task</button>
-        </div>
-        <div class="column" id="inprogress">
-            <h2>In Progress</h2>
-            <div class="tasks"></div>
-            <input type="text" class="new-task-input" placeholder="Add new task...">
-            <button class="add-task-btn">Add Task</button>
-        </div>
-        <div class="column" id="done">
-            <h2>Done</h2>
-            <div class="tasks"></div>
-            <input type="text" class="new-task-input" placeholder="Add new task...">
-            <button class="add-task-btn">Add Task</button>
+
+    <div class="main-container">
+        <h1 class="page-title">Jules Kanban</h1>
+        <button id="create-board-btn">Create New Board</button>
+        <div id="boards-container">
+            <!-- Board cards will be dynamically inserted here -->
+            <!-- Example: <a href="index.html?boardId=123" class="board-card">Board Name 1</a> -->
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Minimal theme switcher logic for main.html, can be expanded or moved to main.js
+        // Consider moving this into main.js if it's not already fully covered there.
+        // For now, assuming main.js might not yet have theme logic or this is a quick setup.
+        const themeSwitchMain = document.getElementById('theme-switch-checkbox');
+        const bodyElementMain = document.body;
+
+        function applyTheme(isLightMode) {
+            if (isLightMode) {
+                bodyElementMain.classList.add('light-mode');
+                themeSwitchMain.checked = true;
+                localStorage.setItem('theme', 'light');
+            } else {
+                bodyElementMain.classList.remove('light-mode');
+                themeSwitchMain.checked = false;
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        themeSwitchMain.addEventListener('change', () => {
+            applyTheme(themeSwitchMain.checked);
+        });
+
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'light') {
+            applyTheme(true);
+        } else {
+            applyTheme(false); // Default to dark
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board</title> <!-- This title will be updated by board.js -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/board.css">
+</head>
+<body>
+    <div class="top-bar-container">
+        <a href="index.html" class="home-button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span>Home</span>
+        </a>
+        <div class="theme-switch-container">
+            <label class="theme-switch" for="theme-switch-checkbox">
+                <input type="checkbox" id="theme-switch-checkbox" />
+                <div class="slider round">
+                    <span class="icon sun-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    </span>
+                    <span class="icon moon-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    </span>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <div class="board-header">
+        <h1 id="board-name-display" title="Click to edit board name">Board Name</h1>
+        <span id="edit-board-name-icon" class="edit-board-icon" style="display: none;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+        </span>
+        <input type="text" id="board-name-input" style="display: none;" />
+    </div>
+
+    <div class="kanban-board">
+        <div class="column" id="todo">
+            <h2>To Do</h2>
+            <div class="tasks"></div>
+            <input type="text" class="new-task-input" placeholder="Add new task...">
+            <button class="add-task-btn">Add Task</button>
+        </div>
+        <div class="column" id="inprogress">
+            <h2>In Progress</h2>
+            <div class="tasks"></div>
+            <input type="text" class="new-task-input" placeholder="Add new task...">
+            <button class="add-task-btn">Add Task</button>
+        </div>
+        <div class="column" id="done">
+            <h2>Done</h2>
+            <div class="tasks"></div>
+            <input type="text" class="new-task-input" placeholder="Add new task...">
+            <button class="add-task-btn">Add Task</button>
+        </div>
+    </div>
+    <script src="assets/js/board.js"></script>
+</body>
+</html>
