@@ -171,14 +171,31 @@ body:not(.light-mode) .theme-switch input:checked + .slider:before { /* Nub when
 
 
 /* === LIGHT THEME (body.light-mode) === */
+/* General body styles for light mode */
+body.light-mode {
+    background-image: none; /* Remove gradient */
+    background-color: #f8f9fa; /* Very light grey, standard for light themes */
+    color: #212529; /* Darker text for better readability, Bootstrap's default body text color */
+}
+
+body.light-mode h1 { /* General light mode h1 */
+    color: #343a40; /* Darker heading text */
+}
+
+body.light-mode h2 { /* General light mode h2, if not overridden by component styles */
+    color: #495057;
+}
+
+
+/* Theme Switch Styles specific for light mode body */
 body.light-mode .theme-switch .slider { /* Default slider bg in light mode (switch ON for light) */
     /* This is when light mode is selected (checkbox is checked) */
-    background-color: rgba(255, 235, 205, 0.6); /* SeaShell/Very Light Peach-Gold glass - slightly more opaque */
+    background-color: rgba(200, 200, 200, 0.5); /* Neutral light grey glass */
     backdrop-filter: blur(5px);
-    border: 1px solid rgba(210, 180, 140, 0.4); /* Tan border */
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 body.light-mode .theme-switch input:checked + .slider .sun-icon { /* Sun icon when light mode is active & selected */
-    color: #e68a00; /* Darker Gold / Orange for better contrast on light bg */
+    color: #f59e0b; /* Amber/Orange for sun, good contrast on light grey */
     opacity: 1;
 }
 body.light-mode .theme-switch input:checked + .slider .moon-icon { /* Moon icon when light mode is active & selected (should be hidden) */
@@ -186,11 +203,11 @@ body.light-mode .theme-switch input:checked + .slider .moon-icon { /* Moon icon 
 }
 
 body.light-mode .theme-switch input:not(:checked) + .slider { /* Slider bg in light mode when switch is OFF (dark mode selected) */
-    background-color: rgba(130, 130, 130, 0.4); /* Mid-tone grey glass for 'off' state in light mode */
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: rgba(80, 80, 80, 0.4); /* Darker grey glass for 'off' state in light mode */
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Match dark mode theme switch */
 }
 body.light-mode .theme-switch input:not(:checked) + .slider .moon-icon { /* Moon icon when light mode is active BUT dark mode selected */
-    color: #333a45; /* Darker slate gray for moon on light bg */
+    color: #b0c4de; /* LightSteelBlue for moon, matching dark mode's moon */
     opacity: 1;
 }
 body.light-mode .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun icon when light mode is active BUT dark mode selected (should be hidden) */
@@ -198,21 +215,14 @@ body.light-mode .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun i
 }
 
 body.light-mode .theme-switch .slider:before { /* Nub color in light mode (when light is selected by default with this body class) */
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #ffffff; /* Solid white nub */
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
 }
 body.light-mode .theme-switch input:not(:checked) + .slider:before { /* Nub when dark is selected, still in light body theme context */
-    background-color: rgba(240, 240, 240, 0.9);
+    background-color: rgba(180, 180, 180, 0.75); /* Darker nub, matching dark mode's nub */
 }
 
-/* Light Theme Styles */
-body.light-mode {
-    background-image: radial-gradient(ellipse at top center, #e0e0e0 0%, #ffffff 85%); /* Light grey to white */
-    color: #333333; /* Dark text */
-}
 
-body.light-mode h1 { /* General light mode h1 */
-    color: #222222; /* Darker heading text */
-}
-
-/* Specific light mode overrides for .column, .task, .new-task-input etc. are now in board.css */
-/* Specific light mode overrides for .page-title, #create-board-btn etc. are now in main.css */
+/* Specific light mode overrides for components like .column, .task, .modal-content etc.
+   will be handled in their respective main.css or board.css files.
+   This section ensures the base body and heading colors for light mode are standard. */
