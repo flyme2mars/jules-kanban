@@ -12,9 +12,9 @@ A sleek, interactive multi-board Kanban system to help you organize and manage y
     *   Edit task content directly on the card.
     *   Delete tasks.
 *   **Drag & Drop:** Intuitively move tasks between columns and reorder them within a column. Supports both mouse and touch interactions.
-*   **Themeable UI:** Switch between a dark and a light theme, both styled with a liquid-glass effect. Theme preference is also saved.
-*   **Enhanced Home Page:** Improved visual styling for board cards, buttons, and layout, consistent with the liquid glass theme.
-*   **Custom Dialogs:** Modern, themed dialog for creating new boards, replacing browser defaults.
+*   **Themeable UI:** Switch between a dark theme (styled with a liquid-glass effect) and a standard light theme (focused on clarity and readability). Theme preference is saved.
+*   **Enhanced Home Page:** Improved visual styling for board cards, buttons, and layout.
+*   **Custom Dialogs:** Modern, themed dialog (matching active theme) for creating new boards.
 *   **Responsive Design:** Adapts to various screen sizes, including desktop, tablet, and mobile.
 
 ## How to Use
