@@ -13,6 +13,8 @@ A sleek, interactive multi-board Kanban system to help you organize and manage y
     *   Delete tasks.
 *   **Drag & Drop:** Intuitively move tasks between columns and reorder them within a column. Supports both mouse and touch interactions.
 *   **Themeable UI:** Switch between a dark and a light theme, both styled with a liquid-glass effect. Theme preference is also saved.
+*   **Enhanced Home Page:** Improved visual styling for board cards, buttons, and layout, consistent with the liquid glass theme.
+*   **Custom Dialogs:** Modern, themed dialog for creating new boards, replacing browser defaults.
 *   **Responsive Design:** Adapts to various screen sizes, including desktop, tablet, and mobile.
 
 ## How to Use
@@ -25,8 +27,9 @@ A sleek, interactive multi-board Kanban system to help you organize and manage y
 
 2.  **Creating a New Board:**
     *   Click the "Create New Board" button.
-    *   Enter a name for your new board when prompted.
-    *   Upon creation, you will be automatically navigated to the new board's page.
+    *   A custom dialog will appear. Enter a name for your new board in the input field.
+    *   Click "Create Board" or press Enter.
+    *   Upon creation, you will be automatically navigated to the new board's page. Click "Cancel" or click outside the dialog to close it without creating a board.
 
 3.  **Accessing an Existing Board:**
     *   Click on any of the board cards displayed on the main page to open that specific Kanban board.

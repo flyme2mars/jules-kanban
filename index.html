@@ -31,6 +31,18 @@
         </div>
     </div>
 
+    <div id="new-board-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <h2>Create New Kanban Board</h2>
+            <label for="new-board-name-input" class="modal-label">Board Name:</label>
+            <input type="text" id="new-board-name-input" class="modal-input" placeholder="Enter board name...">
+            <div class="modal-actions">
+                <button id="cancel-create-board-btn" class="modal-button cancel-btn">Cancel</button>
+                <button id="confirm-create-board-btn" class="modal-button confirm-btn">Create Board</button>
+            </div>
+        </div>
+    </div>
+
     <script src="assets/js/main.js"></script>
     <script>
         // Minimal theme switcher logic for main.html, can be expanded or moved to main.js
