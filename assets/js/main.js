@@ -1,7 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
     const createBoardBtn = document.getElementById('create-board-btn');
     const boardsContainer = document.getElementById('boards-container');
-    const themeSwitch = document.getElementById('theme-switch-checkbox'); // Already handled by inline script in main.html
+    // const themeSwitch = document.getElementById('theme-switch-checkbox'); // Handled by inline script
+
+    // Modal elements
+    const newBoardModal = document.getElementById('new-board-modal');
+    const newBoardNameInput = document.getElementById('new-board-name-input');
+    const confirmCreateBoardBtn = document.getElementById('confirm-create-board-btn');
+    const cancelCreateBoardBtn = document.getElementById('cancel-create-board-btn');
 
     const KANBAN_BOARDS_LIST_KEY = 'julesKanbanBoardsList'; // Stores array of {id, name}
     const KANBAN_BOARD_DATA_PREFIX = 'julesKanbanBoard_'; // Prefix for individual board data
@@ -36,38 +42,91 @@ document.addEventListener('DOMContentLoaded', () => {
             const boardCard = document.createElement('a');
             boardCard.href = `board.html?boardId=${board.id}`;
             boardCard.classList.add('board-card');
-            boardCard.textContent = board.name;
+
+            const iconSpan = document.createElement('span');
+            iconSpan.classList.add('board-card-icon');
+            iconSpan.innerHTML = '&#128194;'; // Folder icon 📂
+            boardCard.appendChild(iconSpan);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.classList.add('board-card-name');
+            nameSpan.textContent = board.name;
+            boardCard.appendChild(nameSpan);
+
             boardsContainer.appendChild(boardCard);
         });
     }
 
-    createBoardBtn.addEventListener('click', () => {
-        const boardName = prompt('Enter a name for your new Kanban board:');
-        if (boardName && boardName.trim() !== '') {
-            const newBoardId = generateBoardId();
-            const boards = getBoardsList();
-            boards.push({ id: newBoardId, name: boardName.trim() });
-            saveBoardsList(boards);
+    function showNewBoardModal() {
+        if (!newBoardModal) return;
+        newBoardNameInput.value = ''; // Clear previous input
+        newBoardModal.classList.add('active');
+        newBoardNameInput.focus();
+    }
 
-            // Initialize data for the new board (e.g., empty columns)
-            // This ensures that when the board page loads, it has a basic structure.
-            const initialBoardData = {
-                id: newBoardId,
-                name: boardName.trim(),
-                columns: {
-                    todo: [],
-                    inprogress: [],
-                    done: []
-                }
-            };
-            localStorage.setItem(`${KANBAN_BOARD_DATA_PREFIX}${newBoardId}`, JSON.stringify(initialBoardData));
+    function hideNewBoardModal() {
+        if (!newBoardModal) return;
+        newBoardModal.classList.remove('active');
+    }
 
-            // Navigate to the new board
-            window.location.href = `board.html?boardId=${newBoardId}`;
-        } else if (boardName !== null) { // User didn't cancel but entered empty name
+    function handleCreateBoard() {
+        const boardName = newBoardNameInput.value.trim();
+        if (boardName === '') {
             alert('Board name cannot be empty.');
+            newBoardNameInput.focus();
+            return;
         }
-    });
+
+        const newBoardId = generateBoardId();
+        const boards = getBoardsList();
+        boards.push({ id: newBoardId, name: boardName });
+        saveBoardsList(boards);
+
+        const initialBoardData = {
+            id: newBoardId,
+            name: boardName,
+            columns: {
+                todo: [],
+                inprogress: [],
+                done: []
+            }
+        };
+        localStorage.setItem(`${KANBAN_BOARD_DATA_PREFIX}${newBoardId}`, JSON.stringify(initialBoardData));
+
+        hideNewBoardModal();
+        displayBoards(); // Refresh the list on the current page
+        window.location.href = `board.html?boardId=${newBoardId}`; // Navigate to new board
+    }
+
+
+    if (createBoardBtn) {
+        createBoardBtn.addEventListener('click', showNewBoardModal);
+    }
+
+    if (confirmCreateBoardBtn) {
+        confirmCreateBoardBtn.addEventListener('click', handleCreateBoard);
+    }
+
+    if (newBoardNameInput) {
+        newBoardNameInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                handleCreateBoard();
+            }
+        });
+    }
+
+    if (cancelCreateBoardBtn) {
+        cancelCreateBoardBtn.addEventListener('click', hideNewBoardModal);
+    }
+
+    // Close modal if clicking on the overlay
+    if (newBoardModal) {
+        newBoardModal.addEventListener('click', (event) => {
+            if (event.target === newBoardModal) { // Clicked on the overlay itself
+                hideNewBoardModal();
+            }
+        });
+    }
 
     // Initial display of boards
     displayBoards();

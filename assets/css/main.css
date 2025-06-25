@@ -12,11 +12,16 @@ body { /* This body style is specific to how main page is laid out */
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
+    background-color: rgba(20, 10, 30, 0.1); /* Subtle darker glass base for the container */
+    backdrop-filter: blur(5px); /* Slightly less than cards for depth */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: inset 0 0 100px rgba(0,0,0,0.1); /* Inner shadow for depth */
 }
 
 .page-title { /* Specific to main page's h1 */
-    color: #E0E0E0; /* From existing style.css h1, but could be overridden by global h1 */
-    font-size: 2.8em; /* Slightly larger for main page title */
+    color: #E8E8E8; /* Slightly brighter for main title */
+    font-size: 3em; /* Slightly larger for main page title */
     margin-bottom: 40px;
     font-weight: bold;
 }
@@ -34,64 +39,260 @@ body.light-mode .page-title {
     border-radius: 6px;
     cursor: pointer;
     font-size: 1.1em;
-    font-weight: 600;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    font-weight: 700; /* Bolder */
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     margin-bottom: 40px;
+    text-shadow: 0 0 10px rgba(230, 230, 255, 0.3); /* Subtle glow */
 }
 
 #create-board-btn:hover {
-    background-color: rgba(42, 0, 80, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(52, 0, 90, 0.25); /* Darker, richer hover */
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 #create-board-btn:active {
-    transform: translateY(1px);
+    transform: translateY(0px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
 }
 
 body.light-mode #create-board-btn {
-    background-color: rgba(240, 240, 240, 0.6);
+    background-color: rgba(255, 255, 255, 0.5); /* Brighter base for light mode */
     color: #333333;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 body.light-mode #create-board-btn:hover {
-    background-color: rgba(230, 230, 230, 0.7);
-    border-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 #boards-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 25px; /* Slightly more gap */
     width: 100%;
+    padding: 10px 0; /* Add some padding if cards are many */
 }
 
 .board-card {
-    background-color: rgba(31, 0, 63, 0.15);
-    backdrop-filter: blur(8px);
-    border-radius: 6px;
-    padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #E0E0E0;
+    background-color: rgba(45, 20, 70, 0.25); /* Richer purple base */
+    backdrop-filter: blur(10px); /* More blur for cards */
+    border-radius: 8px; /* Slightly more rounded */
+    padding: 25px 20px; /* More padding */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Brighter border */
+    color: #EAEAEA;
     text-decoration: none;
-    font-size: 1.2em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1.25em; /* Slightly larger text */
+    font-weight: 500;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
     display: flex;
+    flex-direction: column; /* For icon + text */
     justify-content: center;
     align-items: center;
-    min-height: 100px;
+    min-height: 120px; /* Taller cards */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+.board-card .board-card-icon {
+    font-size: 1.8em; /* Size for an icon */
+    margin-bottom: 10px;
+    opacity: 0.7;
 }
 
 .board-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    transform: translateY(-8px) scale(1.03); /* More pronounced lift and slight scale */
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+    background-color: rgba(55, 30, 80, 0.35); /* Hover bg color change */
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 body.light-mode .board-card {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #333333;
+    background-color: rgba(255, 255, 255, 0.45); /* Lighter glass for light mode */
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: #2c3e50; /* Darker, more saturated text color */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
+
+body.light-mode .board-card .board-card-icon {
+    opacity: 0.6;
+}
+
 body.light-mode .board-card:hover {
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    background-color: rgba(255, 255, 255, 0.65);
+    border-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+/* Custom Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
+    backdrop-filter: blur(5px); /* Frosted glass effect for the overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Ensure it's above other content */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: rgba(30, 10, 50, 0.6); /* Darker, more opaque glass for modal */
+    backdrop-filter: blur(15px); /* Stronger blur for modal content background */
+    padding: 30px 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 450px;
+    color: #EAEAEA;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+    color: #FFFFFF;
+    text-shadow: 0 0 8px rgba(200, 180, 255, 0.5);
+}
+
+.modal-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #D0D0D0;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: #F0F0F0;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: rgba(170, 130, 255, 0.7); /* Violet focus */
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    backdrop-filter: blur(3px);
+}
+
+.confirm-btn {
+    background-color: rgba(60, 170, 60, 0.5); /* Glassy green */
+    color: white;
+    border: 1px solid rgba(60, 170, 60, 0.7);
+}
+
+.confirm-btn:hover {
+    background-color: rgba(70, 190, 70, 0.6);
+    box-shadow: 0 0 10px rgba(70, 190, 70, 0.4);
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background-color: rgba(180, 50, 50, 0.4); /* Glassy red/grey */
+    color: white;
+    border: 1px solid rgba(180, 50, 50, 0.6);
+}
+
+.cancel-btn:hover {
+    background-color: rgba(200, 60, 60, 0.5);
+    box-shadow: 0 0 10px rgba(200, 60, 60, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Light mode modal styles */
+body.light-mode .modal-content {
+    background-color: rgba(255, 255, 255, 0.75); /* Lighter glass for modal, more opaque */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #333333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+body.light-mode .modal-content h2 {
+    color: #222222;
+    text-shadow: none;
+}
+
+body.light-mode .modal-label {
+    color: #444444;
+}
+
+body.light-mode .modal-input {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333333;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+body.light-mode .modal-input:focus {
+    border-color: rgba(0, 123, 255, 0.7); /* Blue focus for light mode */
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .confirm-btn {
+    background-color: rgba(40, 167, 69, 0.7); /* Green from Bootstrap's success */
+    color: white;
+    border: 1px solid rgba(40, 167, 69, 0.9);
+}
+body.light-mode .confirm-btn:hover {
+    background-color: rgba(45, 180, 75, 0.8);
+    box-shadow: 0 0 10px rgba(45, 180, 75, 0.4);
+}
+
+
+body.light-mode .cancel-btn {
+    background-color: rgba(220, 53, 69, 0.6); /* More distinct red for cancel in light */
+    color: white;
+    border: 1px solid rgba(220, 53, 69, 0.8);
+}
+body.light-mode .cancel-btn:hover {
+    background-color: rgba(225, 60, 75, 0.7);
+    box-shadow: 0 0 10px rgba(200,60,60,0.3);
 }

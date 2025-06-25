@@ -116,7 +116,7 @@ body.light-mode .home-button:hover {
 
 /* Light mode specific styles for board header */
 body.light-mode #board-name-display {
-    /* color: #222222; */ /* Covered by general light mode h1 */
+    color: #333333; /* Ensure dark color for board name in light mode */
 }
 
 body.light-mode #board-name-display:hover {
