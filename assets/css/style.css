@@ -66,8 +66,8 @@ h2 {
 .theme-switch {
     position: relative;
     display: inline-block;
-    width: 56px; /* Slightly wider for better icon spacing */
-    height: 30px;
+    width: 50px;  /* Simplified: Adjust width */
+    height: 26px; /* Simplified: Adjust height */
 }
 
 .theme-switch input {
@@ -83,24 +83,24 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--dark-accent);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--dark-glass-border);
-    transition: background-color var(--transition-fast), border-color var(--transition-fast);
-    border-radius: 30px; /* Fully rounded ends */
+    background-color: var(--dark-text-secondary); /* Default background for dark mode (moon selected) */
+    border: 1px solid var(--dark-glass-border); /* Subtle border */
+    transition: background-color var(--transition-fast);
+    border-radius: 26px; /* Fully rounded ends for new height */
+    backdrop-filter: none; /* Removed blur for simplicity on the toggle itself */
 }
 
-.slider:before {
+.slider:before { /* This is the nub */
     position: absolute;
     content: "";
-    height: 22px;
-    width: 22px;
-    left: 4px;
-    bottom: 3px; /* Adjusted for new height */
-    background-color: rgba(255, 255, 255, 0.9);
+    height: 20px; /* Nub size */
+    width: 20px;  /* Nub size */
+    left: 2px;    /* Nub position */
+    bottom: 2px;  /* Nub position */
+    background-color: var(--dark-bg-end); /* Nub color for dark mode */
     transition: transform var(--transition-fast), background-color var(--transition-fast);
     border-radius: 50%;
-    box-shadow: 0 1px 3px var(--dark-shadow-color);
+    box-shadow: none; /* Removed shadow for simplicity */
     z-index: 1;
 }
 
@@ -108,76 +108,72 @@ h2 {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+    width: 14px; /* Smaller icons */
+    height: 14px;
     pointer-events: none;
     transition: opacity var(--transition-fast), color var(--transition-fast);
-    z-index: 0;
+    z-index: 0; /* Icons behind the nub */
 }
 
 .slider .sun-icon {
-    left: 7px;
-    color: #FFD700; /* Gold */
-    opacity: 0;
+    left: 5px; /* Icon position */
+    color: #f39c12; /* Brighter, clearer sun color */
+    opacity: 0; /* Hidden when moon is active */
 }
 
 .slider .moon-icon {
-    right: 7px;
-    color: #d0d0ff; /* Lighter, softer blue/purple for moon */
-    opacity: 1;
+    right: 5px; /* Icon position */
+    color: #ecf0f1; /* Clear white-ish moon for dark slider */
+    opacity: 1; /* Visible by default (dark mode) */
 }
 
-input:checked + .slider .sun-icon { opacity: 1; }
+/* Icon visibility based on checkbox state */
+input:checked + .slider .sun-icon { opacity: 1; } /* Light mode selected: Sun visible */
 input:checked + .slider .moon-icon { opacity: 0; }
-input:not(:checked) + .slider .sun-icon { opacity: 0; }
+input:not(:checked) + .slider .sun-icon { opacity: 0; } /* Dark mode selected: Moon visible */
 input:not(:checked) + .slider .moon-icon { opacity: 1; }
 
-input:checked + .slider {
-    background-color: var(--light-accent);
-    border-color: var(--light-accent-dark);
+/* Slider background color based on checkbox state */
+input:checked + .slider { /* Light mode selected */
+    background-color: var(--light-text-secondary); /* Use a light mode color for slider bg */
+    border-color: var(--light-glass-border);
+}
+input:not(:checked) + .slider { /* Dark mode selected */
+    background-color: var(--dark-text-secondary); /* Dark mode slider bg */
+    border-color: var(--dark-glass-border);
 }
 
+/* Nub color and position based on checkbox state */
+input:checked + .slider:before { /* Light mode selected */
+    background-color: var(--light-bg); /* Nub color for light mode */
+    transform: translateX(24px); /* Move nub to the right */
+}
+input:not(:checked) + .slider:before { /* Dark mode selected */
+    background-color: var(--dark-bg-end); /* Nub color for dark mode */
+    /* transform: translateX(0); Default, no need to specify */
+}
+
+/* Icon colors when their respective mode is active */
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider .moon-icon {
+    color: var(--dark-bg-start); /* Moon icon color on dark slider background */
+}
+body.light-mode .theme-switch input:checked + .slider .sun-icon {
+    color: var(--light-bg); /* Sun icon color on light slider background */
+}
+
+
+/* Focus styles for accessibility */
 input:focus + .slider {
-    box-shadow: 0 0 0 2px var(--dark-accent-light);
+    box-shadow: 0 0 0 2px var(--dark-accent-light); /* Consistent focus outline */
 }
 body.light-mode input:focus + .slider {
     box-shadow: 0 0 0 2px var(--light-accent-dark);
 }
 
+/* === DARK THEME Specifics (body:not(.light-mode)) === */
+/* These are mostly covered by the defaults and input:not(:checked) states now */
 
-input:checked + .slider:before {
-    transform: translateX(26px); /* Adjusted for new width/padding */
-}
-
-/* === DARK THEME (body:not(.light-mode)) - Default styles already set up for dark mode using variables === */
-/* Styles for slider when dark mode is active (checkbox NOT checked) */
-body:not(.light-mode) .theme-switch input:not(:checked) + .slider {
-    background-color: var(--dark-accent);
-    border-color: var(--dark-glass-border);
-}
-body:not(.light-mode) .theme-switch input:not(:checked) + .slider .moon-icon {
-    color: #d0d0ff;
-    opacity: 1;
-}
-body:not(.light-mode) .theme-switch input:not(:checked) + .slider:before {
-    background-color: rgba(220, 220, 255, 0.85); /* Slightly tinted white for dark mode nub */
-}
-
-/* Styles for slider when dark mode is active BUT light mode is selected via switch (checkbox CHECKED) */
-body:not(.light-mode) .theme-switch input:checked + .slider {
-    background-color: var(--light-accent); /* Use light theme variable for consistency */
-    border-color: var(--light-accent-dark);
-}
-body:not(.light-mode) .theme-switch input:checked + .slider .sun-icon {
-    color: #FFC107; /* Brighter sun for this state */
-    opacity: 1;
-}
-body:not(.light-mode) .theme-switch input:checked + .slider:before {
-    background-color: rgba(255, 255, 255, 0.95); /* Brighter white for nub */
-}
-
-
-/* === LIGHT THEME (body.light-mode) === */
+/* === LIGHT THEME Specifics (body.light-mode) === */
 body.light-mode {
     background-image: none;
     background-color: var(--light-bg);
@@ -187,35 +183,17 @@ body.light-mode {
 body.light-mode h1 { color: var(--light-text); }
 body.light-mode h2 { color: var(--light-text-secondary); }
 
-/* Theme Switch Styles specific for light mode body */
-/* Styles for slider when light mode is active (checkbox CHECKED) */
-body.light-mode .theme-switch input:checked + .slider {
-    background-color: var(--light-accent);
-    border-color: var(--light-accent-dark);
-}
-body.light-mode .theme-switch input:checked + .slider .sun-icon {
-    color: #f59e0b; /* Standard light mode sun */
-    opacity: 1;
-}
-body.light-mode .theme-switch input:checked + .slider:before {
-    background-color: #555; /* Darker nub for contrast on light slider */
-}
-
-
-/* Styles for slider when light mode is active BUT dark mode is selected via switch (checkbox NOT checked) */
-body.light-mode .theme-switch input:not(:checked) + .slider {
-    background-color: var(--dark-accent); /* Use dark theme variable */
-    border-color: var(--dark-glass-border);
-}
+/* Adjust icon color for moon when light mode is active BUT dark is selected on toggle */
 body.light-mode .theme-switch input:not(:checked) + .slider .moon-icon {
-    color: #d0d0ff; /* Standard moon color */
-    opacity: 1;
+     color: var(--dark-bg-start); /* Moon icon on dark slider (when in light page theme) */
 }
-body.light-mode .theme-switch input:not(:checked) + .slider:before {
-    background-color: rgba(220, 220, 255, 0.85); /* Light nub for dark slider */
+/* Adjust icon color for sun when dark mode is active BUT light is selected on toggle */
+body:not(.light-mode) .theme-switch input:checked + .slider .sun-icon {
+    color: var(--light-bg); /* Sun icon on light slider (when in dark page theme) */
 }
 
-/* Global scrollbar styling (optional, but can enhance modern feel) */
+
+/* Global scrollbar styling */
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
