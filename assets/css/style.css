@@ -1,39 +1,73 @@
+:root {
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --font-monospace: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+
+    /* Dark Theme Variables */
+    --dark-bg-start: #1a1a2e; /* Deep indigo */
+    --dark-bg-end: #16213e;   /* Dark blue */
+    --dark-text: #e0e0e0;
+    --dark-text-secondary: #b0b0b0;
+    --dark-accent: #0f3460; /* Darker accent for glass elements */
+    --dark-accent-light: #537895; /* Lighter accent for highlights/borders */
+    --dark-shadow-color: rgba(0, 0, 0, 0.3);
+    --dark-glass-border: rgba(255, 255, 255, 0.12);
+    --dark-glass-bg: rgba(20, 20, 40, 0.25); /* Slightly more purple tint */
+
+    /* Light Theme Variables */
+    --light-bg: #f4f7f9; /* Very light cool grey */
+    --light-text: #2c3e50; /* Dark slate blue */
+    --light-text-secondary: #576c7f; /* Lighter slate blue */
+    --light-accent: #e0e7ef; /* Light blue-grey for subtle backgrounds */
+    --light-accent-dark: #a8b8c8; /* Darker accent for borders/hovers */
+    --light-shadow-color: rgba(0, 0, 0, 0.1);
+    --light-glass-border: rgba(0, 0, 0, 0.1);
+    --light-glass-bg: rgba(255, 255, 255, 0.6); /* More opaque white glass */
+
+    /* Global Transitions */
+    --transition-fast: 0.2s ease-in-out;
+    --transition-medium: 0.3s ease-in-out;
+}
+
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-image: radial-gradient(ellipse at top center, #1f003f 0%, #000000 85%);
-    color: #F0F0F0; /* Light text */
+    font-family: var(--font-sans);
+    background-image: radial-gradient(ellipse at top center, var(--dark-bg-start) 0%, var(--dark-bg-end) 85%);
+    color: var(--dark-text);
     margin: 0;
-    padding: 40px; /* This padding will apply to all sides */
+    padding: 20px; /* Reduced global padding, page-specific padding can override */
     min-height: 100vh;
     box-sizing: border-box;
+    transition: background-color var(--transition-medium), color var(--transition-medium);
 }
 
-/* GENERAL h1 STYLING - Board specific H1s (like board name) are in board.css */
-/* Main page specific H1 (page-title) is in main.css */
+/* GENERAL h1, h2 STYLING */
+h1, h2 {
+    font-weight: 600; /* Slightly less bold than default 'bold' for a cleaner look */
+    margin-top: 0; /* Reset default margins */
+    margin-bottom: 0.75em; /* Consistent bottom margin */
+    line-height: 1.3;
+}
+
 h1 {
-    color: #E0E0E0;
-    font-size: 2.5em; /* Default size, can be overridden */
+    color: var(--dark-text);
+    font-size: 2.2em; /* Slightly reduced default H1 */
     text-align: center;
-    font-weight: bold;
-    display: block;
-    width: 100%;
-    margin-top: 20px; /* Basic default margins */
-    margin-bottom: 20px;
 }
 
+h2 {
+    color: var(--dark-text-secondary);
+    font-size: 1.5em;
+}
 
-/* Theme Switch Styles - Global as it appears on multiple pages */
+/* Theme Switch Styles - Global */
 .theme-switch-container {
-    /* These specific positioning rules are now handled by .top-bar-container (board.css)
-       or direct placement in main.html (styled by main.css) if different.
-       The component itself is globally styled here. */
+    /* Positioning handled by parent containers in main.css and board.css */
 }
 
 .theme-switch {
     position: relative;
     display: inline-block;
-    width: 50px; /* Reduced width */
-    height: 28px; /* Reduced height */
+    width: 56px; /* Slightly wider for better icon spacing */
+    height: 30px;
 }
 
 .theme-switch input {
@@ -49,180 +83,174 @@ h1 {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(204, 204, 204, 0.3); /* Light grey with alpha for glass base */
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: .4s;
-    border-radius: 28px; /* Adjusted border-radius */
+    background-color: var(--dark-accent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--dark-glass-border);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    border-radius: 30px; /* Fully rounded ends */
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 20px; /* Reduced nub height */
-    width: 20px;  /* Reduced nub width */
-    left: 3px;    /* Adjusted nub position */
-    bottom: 3px;  /* Adjusted nub position */
-    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
-    transition: .4s;
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 3px; /* Adjusted for new height */
+    background-color: rgba(255, 255, 255, 0.9);
+    transition: transform var(--transition-fast), background-color var(--transition-fast);
     border-radius: 50%;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
-    z-index: 1; /* Ensure nub is above icons */
+    box-shadow: 0 1px 3px var(--dark-shadow-color);
+    z-index: 1;
 }
 
-/* Icons inside the slider */
 .slider .icon {
     position: absolute;
-    top: 50%; /* Default for sun */
-    transform: translateY(-50%); /* Default for sun */
-    width: 16px; /* Icon size */
-    height: 16px;
-    pointer-events: none; /* So they don't interfere with clicks */
-    transition: opacity 0.3s ease, color 0.3s ease;
-    z-index: 0; /* Below the nub */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+    z-index: 0;
 }
 
 .slider .sun-icon {
-    left: 5px; /* Position on the left */
-    /* Default state (switch OFF, dark mode selected): Sun is hidden, but color if it were visible */
-    color: #FFD700; /* Gold for sun */
+    left: 7px;
+    color: #FFD700; /* Gold */
     opacity: 0;
 }
 
 .slider .moon-icon {
-    right: 5px; /* Position on the right */
-    /* Default state (switch OFF, dark mode selected): Moon is visible */
-    color: #b0c4de; /* LightSteelBlue for moon */
+    right: 7px;
+    color: #d0d0ff; /* Lighter, softer blue/purple for moon */
     opacity: 1;
-    transform: translateY(-51%); /* Nudge moon icon up slightly */
 }
 
-/* Styles based on checkbox state (determines which icon is conceptually 'active') */
-/* When switch is ON (light mode selected) */
-input:checked + .slider .sun-icon {
-    opacity: 1; /* Show sun */
-}
-input:checked + .slider .moon-icon {
-    opacity: 0; /* Hide moon */
-}
+input:checked + .slider .sun-icon { opacity: 1; }
+input:checked + .slider .moon-icon { opacity: 0; }
+input:not(:checked) + .slider .sun-icon { opacity: 0; }
+input:not(:checked) + .slider .moon-icon { opacity: 1; }
 
-/* When switch is OFF (dark mode selected) - this is the default state of icons */
-input:not(:checked) + .slider .sun-icon {
-    opacity: 0; /* Hide sun */
+input:checked + .slider {
+    background-color: var(--light-accent);
+    border-color: var(--light-accent-dark);
 }
-input:not(:checked) + .slider .moon-icon {
-    opacity: 1; /* Show moon */
-}
-
-
-/* Slider background color based on checkbox state */
-input:checked + .slider { /* Light mode selected */
-    background-color: rgba(255, 235, 205, 0.5); /* SeaShell/Very Light Peach-Gold glass */
-    border-color: rgba(210, 180, 140, 0.4); /* Tan border, subtle */
-}
-
-input:not(:checked) + .slider { /* Dark mode selected - this is the default slider bg */
-    /* This will be overridden by body:not(.light-mode) .theme-switch .slider for initial dark theme load */
-    /* And by body.light-mode .theme-switch .slider if light theme is active but switch is toggled to dark */
-}
-
 
 input:focus + .slider {
-    box-shadow: 0 0 2px rgba(210, 180, 140, 0.7); /* Focus consistent with new 'on' color */
+    box-shadow: 0 0 0 2px var(--dark-accent-light);
 }
+body.light-mode input:focus + .slider {
+    box-shadow: 0 0 0 2px var(--light-accent-dark);
+}
+
 
 input:checked + .slider:before {
-    transform: translateX(22px); /* Adjusted transform for new size */
+    transform: translateX(26px); /* Adjusted for new width/padding */
 }
 
-/* Theme-specific overrides for icon colors and slider background */
+/* === DARK THEME (body:not(.light-mode)) - Default styles already set up for dark mode using variables === */
+/* Styles for slider when dark mode is active (checkbox NOT checked) */
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider {
+    background-color: var(--dark-accent);
+    border-color: var(--dark-glass-border);
+}
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider .moon-icon {
+    color: #d0d0ff;
+    opacity: 1;
+}
+body:not(.light-mode) .theme-switch input:not(:checked) + .slider:before {
+    background-color: rgba(220, 220, 255, 0.85); /* Slightly tinted white for dark mode nub */
+}
 
-/* === DARK THEME (body:not(.light-mode)) === */
-body:not(.light-mode) .theme-switch .slider { /* Default slider bg in dark mode (switch OFF) */
-    background-color: rgba(85, 85, 85, 0.4); /* Darker glass base */
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+/* Styles for slider when dark mode is active BUT light mode is selected via switch (checkbox CHECKED) */
+body:not(.light-mode) .theme-switch input:checked + .slider {
+    background-color: var(--light-accent); /* Use light theme variable for consistency */
+    border-color: var(--light-accent-dark);
 }
-body:not(.light-mode) .theme-switch input:not(:checked) + .slider .moon-icon { /* Moon icon when dark mode is active & selected */
-    color: #b0c4de; /* LightSteelBlue */
+body:not(.light-mode) .theme-switch input:checked + .slider .sun-icon {
+    color: #FFC107; /* Brighter sun for this state */
     opacity: 1;
 }
-body:not(.light-mode) .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun icon when dark mode is active & selected (should be hidden) */
-    opacity: 0;
-}
-body:not(.light-mode) .theme-switch input:checked + .slider { /* Slider bg in dark mode when switch is ON (light mode selected) */
-    background-color: rgba(255, 235, 205, 0.5); /* SeaShell/Very Light Peach-Gold glass */
-    border-color: rgba(210, 180, 140, 0.4);
-}
-body:not(.light-mode) .theme-switch input:checked + .slider .sun-icon { /* Sun icon when dark mode is active BUT light mode selected */
-    color: #FFD700; /* Gold */
-    opacity: 1;
-}
-body:not(.light-mode) .theme-switch input:checked + .slider .moon-icon { /* Moon icon when dark mode is active BUT light mode selected (should be hidden) */
-    opacity: 0;
-}
-body:not(.light-mode) .theme-switch .slider:before { /* Nub color in dark mode (when dark theme is selected) */
-    background-color: rgba(180, 180, 180, 0.75); /* Darker, more transparent grey */
-    box-shadow: 0 0 2px rgba(0,0,0,0.3); /* Slightly adjusted shadow for new nub color */
-}
-body:not(.light-mode) .theme-switch input:checked + .slider:before { /* Nub when light is selected, still in dark body theme context */
-    background-color: rgba(235, 235, 235, 0.85); /* Slightly less stark white for this transitional state */
+body:not(.light-mode) .theme-switch input:checked + .slider:before {
+    background-color: rgba(255, 255, 255, 0.95); /* Brighter white for nub */
 }
 
 
 /* === LIGHT THEME (body.light-mode) === */
-/* General body styles for light mode */
 body.light-mode {
-    background-image: none; /* Remove gradient */
-    background-color: #f8f9fa; /* Very light grey, standard for light themes */
-    color: #212529; /* Darker text for better readability, Bootstrap's default body text color */
+    background-image: none;
+    background-color: var(--light-bg);
+    color: var(--light-text);
 }
 
-body.light-mode h1 { /* General light mode h1 */
-    color: #343a40; /* Darker heading text */
-}
-
-body.light-mode h2 { /* General light mode h2, if not overridden by component styles */
-    color: #495057;
-}
-
+body.light-mode h1 { color: var(--light-text); }
+body.light-mode h2 { color: var(--light-text-secondary); }
 
 /* Theme Switch Styles specific for light mode body */
-body.light-mode .theme-switch .slider { /* Default slider bg in light mode (switch ON for light) */
-    /* This is when light mode is selected (checkbox is checked) */
-    background-color: rgba(200, 200, 200, 0.5); /* Neutral light grey glass */
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+/* Styles for slider when light mode is active (checkbox CHECKED) */
+body.light-mode .theme-switch input:checked + .slider {
+    background-color: var(--light-accent);
+    border-color: var(--light-accent-dark);
 }
-body.light-mode .theme-switch input:checked + .slider .sun-icon { /* Sun icon when light mode is active & selected */
-    color: #f59e0b; /* Amber/Orange for sun, good contrast on light grey */
+body.light-mode .theme-switch input:checked + .slider .sun-icon {
+    color: #f59e0b; /* Standard light mode sun */
     opacity: 1;
 }
-body.light-mode .theme-switch input:checked + .slider .moon-icon { /* Moon icon when light mode is active & selected (should be hidden) */
-    opacity: 0;
+body.light-mode .theme-switch input:checked + .slider:before {
+    background-color: #555; /* Darker nub for contrast on light slider */
 }
 
-body.light-mode .theme-switch input:not(:checked) + .slider { /* Slider bg in light mode when switch is OFF (dark mode selected) */
-    background-color: rgba(80, 80, 80, 0.4); /* Darker grey glass for 'off' state in light mode */
-    border: 1px solid rgba(255, 255, 255, 0.15); /* Match dark mode theme switch */
+
+/* Styles for slider when light mode is active BUT dark mode is selected via switch (checkbox NOT checked) */
+body.light-mode .theme-switch input:not(:checked) + .slider {
+    background-color: var(--dark-accent); /* Use dark theme variable */
+    border-color: var(--dark-glass-border);
 }
-body.light-mode .theme-switch input:not(:checked) + .slider .moon-icon { /* Moon icon when light mode is active BUT dark mode selected */
-    color: #b0c4de; /* LightSteelBlue for moon, matching dark mode's moon */
+body.light-mode .theme-switch input:not(:checked) + .slider .moon-icon {
+    color: #d0d0ff; /* Standard moon color */
     opacity: 1;
 }
-body.light-mode .theme-switch input:not(:checked) + .slider .sun-icon { /* Sun icon when light mode is active BUT dark mode selected (should be hidden) */
-    opacity: 0;
+body.light-mode .theme-switch input:not(:checked) + .slider:before {
+    background-color: rgba(220, 220, 255, 0.85); /* Light nub for dark slider */
 }
 
-body.light-mode .theme-switch .slider:before { /* Nub color in light mode (when light is selected by default with this body class) */
-    background-color: #ffffff; /* Solid white nub */
-    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+/* Global scrollbar styling (optional, but can enhance modern feel) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
 }
-body.light-mode .theme-switch input:not(:checked) + .slider:before { /* Nub when dark is selected, still in light body theme context */
-    background-color: rgba(180, 180, 180, 0.75); /* Darker nub, matching dark mode's nub */
+::-webkit-scrollbar-track {
+    background: transparent; /* Or a very subtle color from the theme */
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--dark-accent-light);
+    border-radius: 5px;
+    border: 2px solid transparent; /* Creates padding around thumb */
+    background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--dark-text-secondary);
 }
 
+body.light-mode ::-webkit-scrollbar-thumb {
+    background-color: var(--light-accent-dark);
+}
+body.light-mode ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--light-text-secondary);
+}
 
-/* Specific light mode overrides for components like .column, .task, .modal-content etc.
-   will be handled in their respective main.css or board.css files.
-   This section ensures the base body and heading colors for light mode are standard. */
+/* Utility class for subtle glass effect, can be applied to containers */
+.glass-effect-dark {
+    background-color: var(--dark-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--dark-glass-border);
+    box-shadow: 0 4px 12px var(--dark-shadow-color);
+}
+
+.glass-effect-light {
+    background-color: var(--light-glass-bg);
+    backdrop-filter: blur(12px); /* Slightly more blur for light glass */
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 4px 12px var(--light-shadow-color);
+}
