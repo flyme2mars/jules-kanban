@@ -1,9 +1,24 @@
 /* Styles specific to index.html (main page) */
 
-/* Override global body padding for this page if theme switcher needs more space at top */
+.page-header-main {
+    position: fixed; /* Fixed position at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end; /* Align items (theme toggle) to the right */
+    padding: 15px 25px; /* Padding around the toggle */
+    z-index: 1001; /* Ensure it's above .top-bar-container on board page if styles bleed, but below modals */
+    /* Potentially add a subtle background or border if needed, but might be best to keep it clean */
+    /* background-color: rgba(var(--dark-bg-start), 0.3); */
+    /* backdrop-filter: blur(5px); */
+}
+
+/* Adjust body padding to account for the new fixed header's height */
 body {
-    padding-top: 70px; /* Ensures space for theme switcher if it's fixed/absolute */
-    display: flex; /* Keep flex for centering main-container */
+    padding-top: 80px; /* (header padding + approx toggle height + some buffer) */
+    /* Existing flex styles for centering main-container */
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
