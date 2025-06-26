@@ -26,6 +26,17 @@
     /* Global Transitions */
     --transition-fast: 0.2s ease-in-out;
     --transition-medium: 0.3s ease-in-out;
+
+    /* Semantic Colors (can be overridden in themes if needed, but good defaults) */
+    --info-color: #3498db;    /* Blue */
+    --success-color: #2ecc71; /* Green */
+    --danger-color: #e74c3c;   /* Red */
+    --warning-color: #f39c12;  /* Orange/Yellow */
+
+    --info-color-light-theme: #007bff;
+    --success-color-light-theme: #28a745;
+    --danger-color-light-theme: #dc3545;
+    --warning-color-light-theme: #ffc107;
 }
 
 body {

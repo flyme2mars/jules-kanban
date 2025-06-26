@@ -261,67 +261,86 @@ body.light-mode .task:hover {
 /* Task Action Buttons (Edit/Delete) - Modernized */
 .task-actions {
     position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
+    top: 8px; /* Position from the top of the task card */
+    right: 8px; /* Position from the right of the task card */
     display: flex;
-    gap: 8px;
-    opacity: 0; /* Hidden by default */
+    flex-direction: row; /* Align buttons in a row */
+    align-items: center;
+    gap: 6px; /* Reduced gap slightly */
+    opacity: 0;
     transition: opacity var(--transition-fast);
-    background-color: inherit; /* So it blends with task bg until fully visible */
-    padding: 4px; /* Small padding to avoid sharp edges when appearing */
-    border-radius: 6px;
+    /* Removed background-color, padding, and border-radius from the container.
+       These will be on individual buttons if needed, or the container can be simpler. */
 }
-.task:hover .task-actions {
+
+.task:hover .task-actions,
+.task.editing .task-actions { /* Ensure actions are always visible when task is focused/editing */
     opacity: 1;
 }
-.task.editing .task-actions .delete-task-btn { /* Hide delete when editing */
+
+/* When a task is being edited, only the save button (which is .edit-task-btn) should be visible in .task-actions */
+.task.editing .task-actions .delete-task-btn {
     display: none;
 }
-.task.editing .task-actions { /* Ensure actions are visible when editing (for save button) */
-    opacity: 1;
-}
+/* If there are other buttons that should be hidden during edit, add them here */
 
 
-.task-action-btn { /* Common style for edit/delete/save */
+.task-action-btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px; /* Clickable area */
+    padding: 5px; /* Slightly reduced padding for a tighter look */
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; /* Circular buttons */
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    border-radius: 50%;
+    transition: background-color var(--transition-fast);
+    width: 28px; /* Explicit width */
+    height: 28px; /* Explicit height */
 }
+
 .task-action-btn svg {
-    width: 16px;
+    width: 16px; /* Maintain SVG size */
     height: 16px;
-    stroke-width: 2.5;
+    stroke-width: 2.2; /* Slightly thinner for a cleaner look */
+    transition: stroke var(--transition-fast); /* Transition stroke color */
 }
 
-/* Edit Button */
-.edit-task-btn svg { stroke: #3498db; } /* Blue */
-.edit-task-btn:hover { background-color: rgba(52, 152, 219, 0.15); }
-body.light-mode .edit-task-btn svg { stroke: #007bff; }
-body.light-mode .edit-task-btn:hover { background-color: rgba(0, 123, 255, 0.1); }
+/* Default Dark Theme Colors for Action Buttons */
+.edit-task-btn svg { stroke: var(--info-color); }
+.edit-task-btn:hover { background-color: rgba(var(--info-color), 0.15); }
 
-/* Save Button (when .task.editing) */
-.task.editing .edit-task-btn svg { stroke: #2ecc71; } /* Green */
-.task.editing .edit-task-btn:hover { background-color: rgba(46, 204, 113, 0.15); }
-body.light-mode .task.editing .edit-task-btn svg { stroke: #28a745; }
-body.light-mode .task.editing .edit-task-btn:hover { background-color: rgba(40, 167, 69, 0.1); }
+.task.editing .edit-task-btn svg { stroke: var(--success-color); } /* Save state */
+.task.editing .edit-task-btn:hover { background-color: rgba(var(--success-color), 0.15); }
 
-/* Delete Button */
-.delete-task-btn svg { stroke: #e74c3c; } /* Red */
-.delete-task-btn:hover { background-color: rgba(231, 76, 60, 0.15); }
-body.light-mode .delete-task-btn svg { stroke: #dc3545; }
-body.light-mode .delete-task-btn:hover { background-color: rgba(220, 53, 69, 0.1); }
+.delete-task-btn svg { stroke: var(--danger-color); }
+.delete-task-btn:hover { background-color: rgba(var(--danger-color), 0.15); }
+
+/* Light Theme Colors for Action Buttons */
+body.light-mode .edit-task-btn svg { stroke: var(--info-color-light-theme); }
+body.light-mode .edit-task-btn:hover { background-color: rgba(var(--info-color-light-theme), 0.1); }
+
+body.light-mode .task.editing .edit-task-btn svg { stroke: var(--success-color-light-theme); } /* Save state */
+body.light-mode .task.editing .edit-task-btn:hover { background-color: rgba(var(--success-color-light-theme), 0.1); }
+
+body.light-mode .delete-task-btn svg { stroke: var(--danger-color-light-theme); }
+body.light-mode .delete-task-btn:hover { background-color: rgba(var(--danger-color-light-theme), 0.1); }
 
 
-/* Remove old individual button styles if they conflict */
-.task:hover .delete-task-btn, .task:hover .edit-task-btn { /* Old rule, might not be needed if .task-actions works */
-   /* display: flex; */ /* This might be handled by .task-actions opacity now */
+/* Ensure the task content doesn't overlap with the absolute positioned action buttons */
+.task .task-text-content {
+    padding-right: 30px; /* Add padding to the right of the text to make space for buttons */
+}
+/* When editing, the textarea should also have this padding if buttons are to be overlaid,
+   or buttons need to be part of the flex flow. For now, assuming buttons overlay. */
+.task.editing .edit-task-textarea {
+    /* Approximate width of save button (28px) + gap (6px) + right offset (8px) is too much.
+       Just need to accommodate the button itself if it overlays the very end of a line.
+       The .task-actions is positioned 8px from right. Button is 28px wide.
+       So, text should not go into the last ~36px of the textarea.
+       However, the textarea itself has padding. Let's try a more generous padding.
+    */
+    padding-right: 40px; /* Provides space for a ~28px button + some breathing room */
 }
 
 
