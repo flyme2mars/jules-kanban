@@ -1,161 +1,153 @@
 /* Styles specific to index.html (main page) */
-body { /* This body style is specific to how main page is laid out */
-    display: flex;
+
+/* Override global body padding for this page if theme switcher needs more space at top */
+body {
+    padding-top: 70px; /* Ensures space for theme switcher if it's fixed/absolute */
+    display: flex; /* Keep flex for centering main-container */
     flex-direction: column;
     align-items: center;
-    padding-top: 80px; /* Adjust if theme switcher needs more space */
 }
 
 .main-container {
     width: 100%;
-    max-width: 900px;
-    padding: 20px;
+    max-width: 960px; /* Slightly wider for more content space */
+    padding: 30px 40px; /* More horizontal padding */
     box-sizing: border-box;
     text-align: center;
-    background-color: rgba(20, 10, 30, 0.1); /* Subtle darker glass base for the container */
-    backdrop-filter: blur(5px); /* Slightly less than cards for depth */
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: inset 0 0 100px rgba(0,0,0,0.1); /* Inner shadow for depth */
+    border-radius: 12px; /* Softer, larger radius */
+    margin-bottom: 40px; /* Space at the bottom */
+}
+
+/* Apply glass effect using utility classes from style.css */
+body:not(.light-mode) .main-container {
+    background-color: var(--dark-glass-bg);
+    backdrop-filter: blur(12px); /* More blur for main container */
+    border: 1px solid var(--dark-glass-border);
+    box-shadow: 0 8px 32px 0 var(--dark-shadow-color);
+}
+
+body.light-mode .main-container {
+    background-color: var(--light-glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 8px 20px 0 var(--light-shadow-color);
 }
 
 .page-title { /* Specific to main page's h1 */
-    color: #E8E8E8; /* Slightly brighter for main title */
-    font-size: 3em; /* Slightly larger for main page title */
-    margin-bottom: 40px;
-    font-weight: bold;
+    font-size: 2.8em; /* Adjusted size */
+    margin-bottom: 1.5em; /* More space below title */
+    font-weight: 700; /* Slightly bolder for main title */
+    color: var(--dark-text); /* Uses CSS variable */
 }
 
 body.light-mode .page-title {
-    color: #343a40; /* Consistent with global light mode h1 */
-    text-shadow: none; /* Remove glow for standard light theme */
-}
-
-/* Light mode for .main-container */
-body.light-mode .main-container {
-    background-color: #ffffff; /* White background */
-    backdrop-filter: none; /* Remove blur */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Standard shadow */
-    border: 1px solid #dee2e6; /* Light border */
+    color: var(--light-text); /* Uses CSS variable */
 }
 
 #create-board-btn {
-    background-color: rgba(42, 0, 80, 0.12);
-    backdrop-filter: blur(3px);
-    color: #F0F0F0;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 15px 25px;
-    border-radius: 6px;
+    background-image: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Modern gradient */
+    color: #ffffff;
+    border: none;
+    padding: 14px 28px; /* Slightly adjusted padding */
+    border-radius: 50px; /* Pill shape */
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700; /* Bolder */
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    margin-bottom: 40px;
-    text-shadow: 0 0 10px rgba(230, 230, 255, 0.3); /* Subtle glow */
+    font-size: 1.05em;
+    font-weight: 600;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-image var(--transition-medium);
+    margin-bottom: 50px; /* More space */
+    box-shadow: 0 4px 15px 0 rgba(45, 54, 252, 0.3); /* Softer, colored shadow */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 #create-board-btn:hover {
-    background-color: rgba(52, 0, 90, 0.25); /* Darker, richer hover */
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px 0 rgba(45, 54, 252, 0.45);
 }
 
 #create-board-btn:active {
-    transform: translateY(0px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px 0 rgba(45, 54, 252, 0.4);
 }
 
 body.light-mode #create-board-btn {
-    background-color: rgba(255, 255, 255, 0.5); /* Brighter base for light mode */
-    color: #333333;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    text-shadow: none; /* Remove glow */
+    background-image: linear-gradient(to right, #007bff 0%, #0056b3 100%); /* Blue gradient for light mode */
+    color: white;
+    box-shadow: 0 4px 15px 0 rgba(0, 123, 255, 0.25);
 }
 
 body.light-mode #create-board-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    border-color: #0056b3;
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 7px 20px 0 rgba(0, 123, 255, 0.35);
 }
 
-body.light-mode #create-board-btn { /* Standard button look */
-    background-color: #007bff; /* Bootstrap primary blue */
-    color: white;
-    border: 1px solid #007bff;
-    text-shadow: none;
+body.light-mode #create-board-btn:active {
+    box-shadow: 0 3px 10px 0 rgba(0, 123, 255, 0.3);
 }
 
 #boards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 25px; /* Slightly more gap */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Slightly larger min-width for cards */
+    gap: 30px; /* Increased gap */
     width: 100%;
-    padding: 10px 0; /* Add some padding if cards are many */
 }
 
 .board-card {
-    background-color: rgba(45, 20, 70, 0.25); /* Richer purple base */
-    backdrop-filter: blur(10px); /* More blur for cards */
-    border-radius: 8px; /* Slightly more rounded */
-    padding: 25px 20px; /* More padding */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Brighter border */
-    color: #EAEAEA;
+    border-radius: 10px; /* Softer radius */
+    padding: 20px;
     text-decoration: none;
-    font-size: 1.25em; /* Slightly larger text */
+    font-size: 1.15em;
     font-weight: 500;
-    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast);
     display: flex;
-    flex-direction: column; /* For icon + text */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 120px; /* Taller cards */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    min-height: 140px; /* Slightly taller cards */
     text-align: center;
+    position: relative; /* For potential pseudo-elements or absolute positioned icons if added later */
 }
 
-.board-card .board-card-icon {
-    font-size: 1.8em; /* Size for an icon */
-    margin-bottom: 10px;
-    opacity: 0.7;
+/* Apply glass effect using utility classes from style.css */
+body:not(.light-mode) .board-card {
+    background-color: var(--dark-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--dark-glass-border);
+    box-shadow: 0 6px 12px var(--dark-shadow-color);
+    color: var(--dark-text);
 }
 
-.board-card:hover {
-    transform: translateY(-8px) scale(1.03); /* More pronounced lift and slight scale */
-    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-    background-color: rgba(55, 30, 80, 0.35); /* Hover bg color change */
-    border-color: rgba(255, 255, 255, 0.35);
+body:not(.light-mode) .board-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 10px 20px var(--dark-shadow-color);
+    background-color: rgba(var(--dark-glass-bg), 0.5); /* Slightly change bg on hover */
+    border-color: rgba(var(--dark-glass-border), 0.5);
 }
 
 body.light-mode .board-card {
-    background-color: rgba(255, 255, 255, 0.45); /* Lighter glass for light mode */
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    color: #2c3e50; /* Darker, more saturated text color */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Softer shadow */
-    backdrop-filter: none; /* Remove blur */
-}
-
-body.light-mode .board-card .board-card-icon {
-    opacity: 0.7;
-    color: #007bff; /* Icon color matches button */
+    background-color: var(--light-glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 4px 8px var(--light-shadow-color);
+    color: var(--light-text);
 }
 
 body.light-mode .board-card:hover {
-    background-color: #e9ecef; /* Slight grey hover */
-    border-color: #adb5bd; /* Darker border on hover */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    transform: translateY(-4px); /* More subtle lift */
-    color: #0056b3; /* Darker text on hover */
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px var(--light-shadow-color);
+    background-color: rgba(255,255,255, 0.75); /* Lighten on hover */
+    border-color: rgba(var(--light-glass-border), 0.3);
 }
 
-body.light-mode .board-card { /* More standard card */
-    background-color: #ffffff; /* White card */
-    border: 1px solid #dee2e6; /* Standard border */
-    color: #495057; /* Dark grey text */
+.board-card .board-card-icon { /* If you add icons to board cards */
+    font-size: 2em;
+    margin-bottom: 12px;
+    opacity: 0.8;
+    color: var(--dark-accent-light); /* Example color */
 }
+body.light-mode .board-card .board-card-icon {
+    color: var(--light-accent-dark); /* Example color for light mode */
+}
+
 
 /* Custom Modal Styles */
 .modal-overlay {
@@ -164,89 +156,159 @@ body.light-mode .board-card { /* More standard card */
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
-    backdrop-filter: blur(5px); /* Frosted glass effect for the overlay */
+    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
+    backdrop-filter: blur(8px); /* More blur for overlay */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000; /* Ensure it's above other content */
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    transition: opacity var(--transition-medium), visibility 0s linear var(--transition-medium);
 }
 
 .modal-overlay.active {
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.3s ease;
+    transition: opacity var(--transition-medium);
 }
 
 .modal-content {
-    background-color: rgba(30, 10, 50, 0.6); /* Darker, more opaque glass for modal */
-    backdrop-filter: none; /* Remove blur for standard modal */
-    padding: 25px; /* Adjusted padding */
-    border-radius: 8px; /* Standard border radius */
-    border: 1px solid #ccc; /* Lighter border */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Standard modal shadow */
-    color: #212529; /* Dark text */
+    padding: 30px 35px; /* More padding */
+    border-radius: 12px; /* Consistent with main-container */
+    width: 100%;
+    max-width: 450px; /* Control max width */
+    text-align: left; /* Align text to left for better readability */
+    transform: scale(0.95);
+    transition: transform var(--transition-medium);
 }
 
-/* No specific transform for standard modal, handled by overlay transition */
-
-body.light-mode .modal-content h2 {
-    color: #343a40; /* Dark heading */
-    text-shadow: none;
-    font-size: 1.6em; /* Slightly smaller */
-    margin-bottom: 20px;
+.modal-overlay.active .modal-content {
+    transform: scale(1);
 }
 
-body.light-mode .modal-label {
-    color: #495057; /* Dark grey label */
-    font-weight: normal; /* Standard weight */
-    margin-bottom: 5px;
+body:not(.light-mode) .modal-content {
+    background-color: var(--dark-glass-bg);
+    backdrop-filter: blur(15px); /* More blur for modal content */
+    border: 1px solid var(--dark-glass-border);
+    box-shadow: 0 8px 25px var(--dark-shadow-color);
+    color: var(--dark-text);
+}
+
+body.light-mode .modal-content {
+    background-color: var(--light-glass-bg);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 8px 25px var(--light-shadow-color);
+    color: var(--light-text);
+}
+
+.modal-content h2 {
+    font-size: 1.8em;
+    margin-bottom: 25px; /* More space */
+    text-align: center; /* Center modal title */
+    color: inherit; /* Inherit color from modal-content */
+}
+
+.modal-label {
+    display: block; /* Make label take full width */
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-bottom: 8px; /* Space between label and input */
+    color: inherit;
+    opacity: 0.9;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px; /* Softer radius */
+    border: 1px solid; /* Border color set by theme */
+    background-color: transparent; /* Make it part of the glass */
+    font-size: 1em;
+    box-sizing: border-box;
+    margin-bottom: 25px; /* More space */
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    color: inherit;
+}
+
+body:not(.light-mode) .modal-input {
+    border-color: var(--dark-glass-border);
+}
+body:not(.light-mode) .modal-input:focus {
+    outline: none;
+    border-color: var(--dark-accent-light);
+    box-shadow: 0 0 0 3px rgba(var(--dark-accent-light), 0.3);
 }
 
 body.light-mode .modal-input {
-    background-color: #fff; /* White input background */
-    color: #495057; /* Standard input text color */
-    border: 1px solid #ced4da; /* Standard input border */
-    padding: 10px; /* Standard padding */
-    margin-bottom: 20px; /* Standard margin */
+    border-color: var(--light-glass-border);
+    background-color: rgba(255,255,255,0.5); /* Slightly opaque for better readability in light mode */
 }
-
 body.light-mode .modal-input:focus {
-    border-color: #80bdff; /* Bootstrap focus blue */
-    background-color: #fff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Bootstrap focus shadow */
+    outline: none;
+    border-color: var(--light-accent-dark);
+    box-shadow: 0 0 0 3px rgba(var(--light-accent-dark), 0.3);
 }
 
-body.light-mode .modal-actions {
-    gap: 10px; /* Standard gap */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 15px; /* Space between buttons */
 }
-body.light-mode .modal-button {
-    font-weight: normal; /* Standard font weight */
-    backdrop-filter: none; /* Remove blur */
-    box-shadow: none;
+
+.modal-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    border: none;
+}
+
+.confirm-btn {
+    background-color: #2575fc; /* Gradient start color from main button */
+    color: white;
+}
+.confirm-btn:hover {
+    background-color: #1a5fc3; /* Darker shade */
+    box-shadow: 0 2px 8px rgba(37, 117, 252, 0.4);
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background-color: transparent;
+    border: 1px solid; /* Border color set by theme */
+}
+.cancel-btn:hover {
+    transform: translateY(-1px);
+}
+
+body:not(.light-mode) .cancel-btn {
+    color: var(--dark-text-secondary);
+    border-color: var(--dark-text-secondary);
+}
+body:not(.light-mode) .cancel-btn:hover {
+    background-color: rgba(var(--dark-text-secondary), 0.1);
+    border-color: var(--dark-text);
+    color: var(--dark-text);
 }
 
 body.light-mode .confirm-btn {
-    background-color: #007bff; /* Primary blue */
-    color: white;
-    border: 1px solid #007bff;
+    background-color: #007bff;
 }
 body.light-mode .confirm-btn:hover {
     background-color: #0056b3;
-    border-color: #0056b3;
-    box-shadow: none;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
 }
 
 body.light-mode .cancel-btn {
-    background-color: #6c757d; /* Secondary grey */
-    color: white;
-    border: 1px solid #6c757d;
+    color: var(--light-text-secondary);
+    border-color: var(--light-text-secondary);
 }
 body.light-mode .cancel-btn:hover {
-    background-color: #545b62;
-    border-color: #545b62;
-    box-shadow: none;
+    background-color: rgba(var(--light-text-secondary), 0.1);
+    border-color: var(--light-text);
+    color: var(--light-text);
 }

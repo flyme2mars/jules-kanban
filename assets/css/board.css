@@ -1,683 +1,530 @@
 /* Styles specific to board.html */
 
-/* Top Bar for Home button and Theme Switch - specific layout for board page */
+/* Top Bar: Home button and Theme Switch */
 .top-bar-container {
-    position: fixed;
-    top: 20px;
-    left: 20px; /* Home button on the left */
-    right: 20px; /* Theme switch on the right */
+    position: fixed; /* Keep it fixed */
+    top: 0; /* Align to top */
+    left: 0;
+    right: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: calc(100% - 40px); /* Account for body padding or fixed positioning */
+    width: 100%;
+    padding: 15px 25px; /* Adjusted padding */
+    box-sizing: border-box;
     z-index: 1000;
-    pointer-events: none; /* Allow clicks on elements below, enable for children */
+    /* Apply a subtle glass effect to the entire bar */
+    transition: background-color var(--transition-medium), backdrop-filter var(--transition-medium);
+}
+body:not(.light-mode) .top-bar-container {
+    background-color: rgba(var(--dark-bg-start), 0.5); /* Use a slightly transparent version of body bg */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--dark-glass-border);
+}
+body.light-mode .top-bar-container {
+    background-color: rgba(var(--light-bg), 0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--light-glass-border);
 }
 
-.home-button, .theme-switch-container { /* .theme-switch-container needs pointer-events here */
-    pointer-events: auto; /* Enable clicks for these specific children */
-}
 
 .home-button {
     display: flex;
     align-items: center;
     text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    background-color: rgba(31, 0, 63, 0.15); /* Consistent with column bg */
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    color: #E0E0E0;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 8px 15px; /* More padding */
+    border-radius: 8px; /* Softer radius */
+    font-weight: 500;
+    transition: background-color var(--transition-fast), box-shadow var(--transition-fast), color var(--transition-fast);
 }
 
 .home-button svg {
     margin-right: 8px;
-    width: 20px;
-    height: 20px;
+    width: 22px; /* Slightly larger icon */
+    height: 22px;
+    transition: fill var(--transition-fast);
 }
 
-.home-button:hover {
-    background-color: rgba(42, 0, 80, 0.25);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+body:not(.light-mode) .home-button {
+    background-color: transparent; /* Make it blend more initially */
+    color: var(--dark-text-secondary);
+    border: 1px solid transparent; /* Placeholder for hover */
 }
+body:not(.light-mode) .home-button:hover {
+    background-color: var(--dark-glass-bg); /* Use glass bg for hover */
+    color: var(--dark-text);
+    border-color: var(--dark-glass-border);
+    box-shadow: 0 2px 8px rgba(var(--dark-shadow-color), 0.5);
+}
+body:not(.light-mode) .home-button svg { fill: var(--dark-text-secondary); }
+body:not(.light-mode) .home-button:hover svg { fill: var(--dark-text); }
+
 
 body.light-mode .home-button {
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: #333333;
+    background-color: transparent;
+    color: var(--light-text-secondary);
+    border: 1px solid transparent;
 }
-
 body.light-mode .home-button:hover {
-    background-color: rgba(240, 240, 240, 0.5);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: var(--light-glass-bg);
+    color: var(--light-text);
+    border-color: var(--light-glass-border);
+    box-shadow: 0 2px 8px var(--light-shadow-color);
 }
+body.light-mode .home-button svg { fill: var(--light-text-secondary); }
+body.light-mode .home-button:hover svg { fill: var(--light-text); }
+
 
 /* Board Header Styles */
 .board-header {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 80px; /* Space below fixed top-bar */
-    margin-bottom: 30px;
-    position: relative;
+    margin-top: 100px; /* Increased space for fixed top-bar with padding */
+    margin-bottom: 40px; /* More space */
+    position: relative; /* For icon positioning */
 }
 
 #board-name-display {
-    color: #E0E0E0; /* Will be overridden by general h1 or light mode h1 if not specific enough */
-    font-size: 2.2em;
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+    font-size: 2.4em; /* Larger board name */
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
     cursor: pointer;
-    position: relative;
+    color: var(--dark-text);
 }
+body.light-mode #board-name-display { color: var(--light-text); }
 
 #board-name-display:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover for dark */
+}
+body.light-mode #board-name-display:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover for light */
 }
 
 .edit-board-icon {
-    display: none;
-    margin-left: 10px;
+    /* display: none; Initially hidden by JS */
+    margin-left: 12px;
     cursor: pointer;
-    color: #b0b0b0;
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast);
+    opacity: 0.6; /* Make it less prominent initially */
 }
+.edit-board-icon:hover { opacity: 1; }
 
 .edit-board-icon svg {
-    width: 20px;
-    height: 20px;
+    width: 22px; /* Match home icon size */
+    height: 22px;
+    stroke-width: 2.5; /* Slightly thicker lines for modern feel */
 }
+body:not(.light-mode) .edit-board-icon { color: var(--dark-text-secondary); }
+body:not(.light-mode) .edit-board-icon:hover { color: var(--dark-text); }
+body.light-mode .edit-board-icon { color: var(--light-text-secondary); }
+body.light-mode .edit-board-icon:hover { color: var(--light-text); }
 
-.edit-board-icon:hover {
-    color: #E0E0E0;
-}
 
 #board-name-input {
-    font-size: 2.2em;
-    font-weight: bold;
-    color: #E0E0E0;
-    background-color: rgba(31, 0, 63, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    padding: 5px 10px;
-    border-radius: 4px;
+    font-size: 2.4em; /* Match display size */
+    font-weight: 700;
+    padding: 8px 15px;
+    border-radius: 8px;
     text-align: center;
-    display: none;
-    max-width: 80%;
+    /* display: none; JS handled */
+    max-width: 70%; /* Prevent it from becoming too wide */
+    border: 1px solid; /* Themed border */
+    background-color: transparent; /* Glassy input */
 }
-
-#board-name-input:focus {
+body:not(.light-mode) #board-name-input {
+    color: var(--dark-text);
+    border-color: var(--dark-glass-border);
+    background-color: var(--dark-glass-bg); /* Subtle bg for input */
+}
+body:not(.light-mode) #board-name-input:focus {
     outline: none;
-    border-color: rgba(220, 200, 255, 0.35);
-    box-shadow: 0 0 5px rgba(220, 200, 255, 0.1);
+    border-color: var(--dark-accent-light);
+    box-shadow: 0 0 0 3px rgba(var(--dark-accent-light), 0.3);
 }
-
-/* Light mode specific styles for board header */
-body.light-mode .home-button { /* Already defined, adding for completeness if any changes needed */
-    background-color: #e9ecef; /* Light grey */
-    border: 1px solid #ced4da;
-    color: #343a40;
-}
-body.light-mode .home-button:hover {
-    background-color: #dee2e6;
-}
-
-body.light-mode #board-name-display {
-    color: #343a40; /* Dark heading color */
-}
-
-body.light-mode #board-name-display:hover {
-    background-color: #e9ecef; /* Subtle hover */
-}
-
-body.light-mode .edit-board-icon {
-    color: #6c757d; /* Grey icon */
-}
-
-body.light-mode .edit-board-icon:hover {
-    color: #343a40; /* Darker on hover */
-}
-
 body.light-mode #board-name-input {
-    color: #495057;
-    background-color: #fff;
-    border: 1px solid #ced4da;
+    color: var(--light-text);
+    border-color: var(--light-glass-border);
+    background-color: var(--light-glass-bg);
 }
-
 body.light-mode #board-name-input:focus {
-    border-color: #80bdff; /* Bootstrap focus blue */
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    outline: none;
+    border-color: var(--light-accent-dark);
+    box-shadow: 0 0 0 3px rgba(var(--light-accent-dark), 0.3);
 }
-
 
 /* Kanban Board Core Styles */
 .kanban-board {
     display: flex;
-    gap: 30px;
+    gap: 25px; /* Slightly reduced gap */
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px; /* Wider board */
     margin: 0 auto;
-    justify-content: center;
+    padding: 0 20px; /* Padding for board on smaller screens */
+    box-sizing: border-box;
+    justify-content: center; /* Center columns if they don't fill width */
 }
 
 .column {
-    background-color: rgba(31, 0, 63, 0.15);
-    backdrop-filter: blur(8px);
-    border-radius: 6px;
+    border-radius: 10px; /* Softer radius */
     padding: 20px;
-    width: 300px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 320px; /* Slightly wider columns */
     display: flex;
     flex-direction: column;
+    max-height: calc(100vh - 200px); /* Prevent columns from being too tall, adjust as needed */
+}
+body:not(.light-mode) .column {
+    background-color: var(--dark-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--dark-glass-border);
+    box-shadow: 0 6px 15px var(--dark-shadow-color);
+}
+body.light-mode .column {
+    background-color: var(--light-glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 6px 15px var(--light-shadow-color);
 }
 
-.column h2 {
+.column h2 { /* Column titles */
     text-align: center;
-    color: #E0E0E0;
-    margin-top: 0;
-    font-size: 1.4em;
+    font-size: 1.3em; /* Slightly smaller */
     font-weight: 600;
-    border-bottom: 1px solid #333;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    padding-bottom: 12px;
+    margin-bottom: 18px; /* Space below title */
+    border-bottom: 1px solid;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+body:not(.light-mode) .column h2 {
+    color: var(--dark-text);
+    border-bottom-color: var(--dark-glass-border);
+}
+body.light-mode .column h2 {
+    color: var(--light-text);
+    border-bottom-color: var(--light-glass-border);
 }
 
 .tasks {
-    min-height: 200px;
-    max-height: 400px;
-    overflow-y: auto;
-    background-color: rgba(31, 0, 63, 0.03);
-    border-radius: 6px;
-    padding: 15px;
+    min-height: 150px; /* Reduced min-height */
+    /* max-height is effectively controlled by .column's max-height and flex-grow */
+    overflow-y: auto; /* Uses global scrollbar style */
+    border-radius: 8px;
+    padding: 10px; /* Padding inside tasks area */
     flex-grow: 1;
-    margin-bottom: 15px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(220, 200, 255, 0.2) rgba(31, 0, 63, 0.05);
+    margin-bottom: 20px; /* More space below tasks list */
 }
+body:not(.light-mode) .tasks {
+    background-color: rgba(0,0,0, 0.1); /* Darker, subtle inner bg */
+}
+body.light-mode .tasks {
+    background-color: rgba(255,255,255,0.3); /* Lighter, subtle inner bg */
+}
+
 
 .task {
-    background-color: rgba(42, 0, 80, 0.1);
-    backdrop-filter: blur(5px);
-    color: #F0F0F0;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 4px;
-    cursor: grab;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 0.9em;
-    position: relative;
-}
-
-.delete-task-btn {
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    color: #bbb;
-    font-size: 16px;
-    font-weight: 300;
-    cursor: pointer;
-    padding: 3px 6px;
-    border-radius: 3px;
-    background-color: transparent;
-    border: none;
-    transition: color 0.2s ease;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.delete-task-btn:hover {
-    background-color: transparent;
-    border: none;
-    color: #fff;
-}
-
-.task:hover .delete-task-btn,
-.task:hover .edit-task-btn {
-    display: flex;
-}
-
-.edit-task-btn {
-    position: absolute;
-    top: 50%;
-    right: 45px;
-    transform: translateY(-50%);
-    color: #54A0FF;
-    font-size: 16px;
-    font-weight: 300;
-    cursor: pointer;
-    padding: 5px 8px;
-    border-radius: 4px;
-    background-color: rgba(84, 160, 255, 0.1);
-    backdrop-filter: blur(3px);
-    border: 1px solid rgba(84, 160, 255, 0.2);
-    line-height: 1;
-    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-}
-
-.task.editing .edit-task-btn {
-    color: #2ECC71;
-    background-color: rgba(46, 204, 113, 0.1);
-    border-color: rgba(46, 204, 113, 0.2);
-}
-
-.task:hover .edit-task-btn:not(.task.editing .edit-task-btn),
-.task:hover .delete-task-btn {
-    display: flex;
-    opacity: 1;
-}
-.task.editing .edit-task-btn {
-    display: flex;
-    opacity: 1;
-}
-
-.edit-task-btn:hover {
-    color: #77b5fe;
-    background-color: rgba(84, 160, 255, 0.2);
-    border-color: rgba(84, 160, 255, 0.4);
-}
-
-.task.editing .edit-task-btn:hover {
-    color: #58D68D;
-    background-color: rgba(46, 204, 113, 0.2);
-    border-color: rgba(46, 204, 113, 0.4);
-}
-
-.delete-task-btn { /* This is a more specific rule for delete button, overriding the general one above */
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    color: #FF6B6B;
-    font-size: 16px;
-    font-weight: 300;
-    cursor: pointer;
-    padding: 5px 8px;
-    border-radius: 4px;
-    background-color: rgba(255, 107, 107, 0.1);
-    backdrop-filter: blur(3px);
-    border: 1px solid rgba(255, 107, 107, 0.2);
-    line-height: 1;
-    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-}
-
-.delete-task-btn:hover {
-    color: #ff8686;
-    background-color: rgba(255, 107, 107, 0.2);
-    border-color: rgba(255, 107, 107, 0.4);
-}
-
-.task.task-editing-state .delete-task-btn {
-    display: none !important;
-    opacity: 0 !important;
-}
-
-.edit-task-textarea {
-    width: calc(100% - 10px);
-    padding: 8px;
-    margin: 0;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    background-color: rgba(42, 0, 80, 0.25);
-    color: #F0F0F0;
-    box-sizing: border-box;
-    font-family: inherit;
-    font-size: inherit;
-    resize: vertical;
-    min-height: 40px;
-    line-height: 1.4;
-    overflow-y: hidden;
-    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out, width 0.2s ease-in-out;
-    flex-grow: 1;
-}
-
-.task.editing {
-    display: flex;
-    align-items: flex-start;
-    padding-right: 5px;
-}
-
-.task.editing .edit-task-textarea {
-    width: calc(100% - 55px);
-    margin-right: 10px;
-}
-
-.task.editing .edit-task-btn {
-    position: relative;
-    right: auto;
-    top: auto;
-    transform: none;
-    flex-shrink: 0;
-    margin-top: 8px;
-}
-
-.edit-task-textarea:focus {
-    outline: none;
-    border-color: rgba(220, 200, 255, 0.35);
-    background-color: rgba(42, 0, 80, 0.35);
-    box-shadow: 0 0 5px rgba(220, 200, 255, 0.1);
-}
-
-.task .delete-task-btn { /* Already defined, but ensures context if needed */
-    right: 5px;
-}
-
-.task.editing .task-text-content {
-    display: none;
-}
-
-.task:active {
-    cursor: grabbing;
-    background-color: #4f4f4f;
-}
-
-.new-task-input {
-    width: 100%;
-    padding: 12px;
+    padding: 12px 15px; /* More padding */
     margin-bottom: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
-    background-color: rgba(31, 0, 63, 0.05);
-    color: #F0F0F0;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    border-radius: 8px; /* Softer radius */
+    cursor: grab;
+    font-size: 0.95em; /* Slightly larger task text */
+    line-height: 1.5;
+    position: relative; /* For action buttons */
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+    overflow: hidden; /* Ensures buttons with absolute positioning don't overflow weirdly during edit */
 }
-
-.new-task-input:focus {
-    border-color: rgba(255, 255, 255, 0.45);
+body:not(.light-mode) .task {
+    background-color: rgba(var(--dark-accent), 0.5); /* Use accent with alpha */
+    backdrop-filter: blur(5px);
+    color: var(--dark-text);
+    border: 1px solid rgba(var(--dark-glass-border), 0.7);
+    box-shadow: 0 2px 5px rgba(var(--dark-shadow-color), 0.5);
 }
-
-.new-task-input::placeholder {
-    color: #888;
-}
-
-.add-task-btn {
-    background-color: rgba(42, 0, 80, 0.12);
-    backdrop-filter: blur(3px);
-    color: #F0F0F0;
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    padding: 12px 18px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
-    width: 100%;
-}
-
-.add-task-btn:hover {
-    background-color: rgba(42, 0, 80, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-.add-task-btn:active {
-    transform: translateY(1px);
-    background-color: rgba(42, 0, 80, 0.08);
-}
-
-.add-task-btn:focus {
-    outline: none;
-    background-color: rgba(42, 0, 80, 0.18);
-    border-color: rgba(255, 255, 255, 0.35);
-}
-
-.drag-over {
-    background-color: #222222;
-    border: 2px dashed #E0E0E0;
-}
-
-.dragging {
-    opacity: 0.6;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Scrollbar Styling for .tasks */
-.tasks::-webkit-scrollbar {
-  width: 8px;
-}
-
-.tasks::-webkit-scrollbar-track {
-  background: rgba(31, 0, 63, 0.05);
-  border-radius: 4px;
-}
-
-.tasks::-webkit-scrollbar-thumb {
-  background-color: rgba(220, 200, 255, 0.2);
-  border-radius: 4px;
-  border: 2px solid rgba(31, 0, 63, 0.05);
-}
-
-.tasks::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(220, 200, 255, 0.3);
-}
-
-
-/* Light Theme Overrides for Board Specific Elements */
-body.light-mode .column {
-    background-color: #e9ecef; /* Light grey column background */
-    backdrop-filter: none; /* Remove blur */
-    border: 1px solid #ced4da; /* Standard border */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-}
-
-body.light-mode .column h2 {
-    color: #495057; /* Dark grey for column titles */
-    border-bottom: 1px solid #dee2e6; /* Lighter separator line */
-}
-
-body.light-mode .tasks {
-    background-color: #f8f9fa; /* Very light background for tasks area */
-    scrollbar-color: #adb5bd #f8f9fa; /* Standard scrollbar colors */
+body:not(.light-mode) .task:hover {
+    border-color: var(--dark-accent-light);
+    background-color: rgba(var(--dark-accent), 0.7);
 }
 
 body.light-mode .task {
-    background-color: #ffffff; /* White task cards */
-    backdrop-filter: none; /* Remove blur */
-    color: #212529; /* Dark text for tasks */
-    border: 1px solid #dee2e6; /* Standard border for tasks */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for tasks */
+    background-color: rgba(255,255,255,0.8); /* More opaque white */
+    color: var(--light-text);
+    border: 1px solid var(--light-glass-border);
+    box-shadow: 0 2px 4px var(--light-shadow-color);
+}
+body.light-mode .task:hover {
+    border-color: var(--light-accent-dark);
+    background-color: #fff; /* Solid white on hover */
+}
+
+/* Task Action Buttons (Edit/Delete) - Modernized */
+.task-actions {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity var(--transition-fast);
+    background-color: inherit; /* So it blends with task bg until fully visible */
+    padding: 4px; /* Small padding to avoid sharp edges when appearing */
+    border-radius: 6px;
+}
+.task:hover .task-actions {
+    opacity: 1;
+}
+.task.editing .task-actions .delete-task-btn { /* Hide delete when editing */
+    display: none;
+}
+.task.editing .task-actions { /* Ensure actions are visible when editing (for save button) */
+    opacity: 1;
+}
+
+
+.task-action-btn { /* Common style for edit/delete/save */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px; /* Clickable area */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Circular buttons */
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.task-action-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
+}
+
+/* Edit Button */
+.edit-task-btn svg { stroke: #3498db; } /* Blue */
+.edit-task-btn:hover { background-color: rgba(52, 152, 219, 0.15); }
+body.light-mode .edit-task-btn svg { stroke: #007bff; }
+body.light-mode .edit-task-btn:hover { background-color: rgba(0, 123, 255, 0.1); }
+
+/* Save Button (when .task.editing) */
+.task.editing .edit-task-btn svg { stroke: #2ecc71; } /* Green */
+.task.editing .edit-task-btn:hover { background-color: rgba(46, 204, 113, 0.15); }
+body.light-mode .task.editing .edit-task-btn svg { stroke: #28a745; }
+body.light-mode .task.editing .edit-task-btn:hover { background-color: rgba(40, 167, 69, 0.1); }
+
+/* Delete Button */
+.delete-task-btn svg { stroke: #e74c3c; } /* Red */
+.delete-task-btn:hover { background-color: rgba(231, 76, 60, 0.15); }
+body.light-mode .delete-task-btn svg { stroke: #dc3545; }
+body.light-mode .delete-task-btn:hover { background-color: rgba(220, 53, 69, 0.1); }
+
+
+/* Remove old individual button styles if they conflict */
+.task:hover .delete-task-btn, .task:hover .edit-task-btn { /* Old rule, might not be needed if .task-actions works */
+   /* display: flex; */ /* This might be handled by .task-actions opacity now */
+}
+
+
+.edit-task-textarea {
+    width: 100%; /* Takes full width of task content area */
+    padding: 10px; /* Match task padding */
+    margin: -12px -15px; /* Counteract task padding to fill it */
+    border: none; /* Remove default border */
+    border-radius: 8px; /* Match task radius */
+    background-color: transparent; /* Blends with task */
+    color: inherit; /* Inherit from .task */
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    resize: vertical;
+    min-height: 50px; /* Ensure decent height */
+    transition: box-shadow var(--transition-fast);
+}
+.task.editing { /* Adjust task padding when textarea is active */
+    padding: 0; /* Textarea will provide its own padding effectively */
+}
+.task.editing .task-text-content { display: none; }
+
+body:not(.light-mode) .edit-task-textarea {
+    background-color: rgba(var(--dark-accent), 0.8); /* Slightly more opaque for editing */
+}
+body:not(.light-mode) .edit-task-textarea:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--dark-accent-light); /* Inner focus ring */
+}
+body.light-mode .edit-task-textarea {
+    background-color: #fff; /* Solid white for editing in light mode */
+}
+body.light-mode .edit-task-textarea:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--light-accent-dark);
+}
+
+.task:active:not(.editing) { /* Only apply grab effect if not editing */
+    cursor: grabbing;
+}
+body:not(.light-mode) .task:active:not(.editing) {
+    background-color: rgba(var(--dark-accent), 0.8);
+    box-shadow: 0 4px 10px rgba(var(--dark-shadow-color), 0.7);
+}
+body.light-mode .task:active:not(.editing) {
+    background-color: #f8f9fa; /* Slightly off-white when dragging */
+    box-shadow: 0 4px 10px var(--light-shadow-color);
+}
+
+
+.new-task-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid;
+    background-color: transparent; /* Glassy */
+    box-sizing: border-box;
+    font-size: 0.95em;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+body:not(.light-mode) .new-task-input {
+    color: var(--dark-text);
+    border-color: var(--dark-glass-border);
+    background-color: rgba(var(--dark-glass-bg), 0.5); /* Consistent with column elements */
+}
+body:not(.light-mode) .new-task-input::placeholder { color: var(--dark-text-secondary); opacity: 0.7; }
+body:not(.light-mode) .new-task-input:focus {
+    outline: none;
+    border-color: var(--dark-accent-light);
+    box-shadow: 0 0 0 2px rgba(var(--dark-accent-light), 0.2);
 }
 
 body.light-mode .new-task-input {
-    background-color: #fff;
-    color: #495057;
-    border: 1px solid #ced4da;
+    color: var(--light-text);
+    border-color: var(--light-glass-border);
+    background-color: rgba(var(--light-glass-bg), 0.7);
 }
-
-body.light-mode .new-task-input::placeholder {
-    color: #6c757d; /* Standard placeholder color */
-}
-
+body.light-mode .new-task-input::placeholder { color: var(--light-text-secondary); opacity: 0.7; }
 body.light-mode .new-task-input:focus {
-    border-color: #80bdff;
-    background-color: #fff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    outline: none;
+    border-color: var(--light-accent-dark);
+    box-shadow: 0 0 0 2px rgba(var(--light-accent-dark), 0.2);
+}
+
+
+.add-task-btn {
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+    width: 100%;
+    border: none; /* Remove border, rely on background */
+    font-size: 0.95em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+body:not(.light-mode) .add-task-btn {
+    background-color: var(--dark-accent-light);
+    color: var(--dark-text);
+    box-shadow: 0 2px 5px rgba(var(--dark-shadow-color), 0.3);
+}
+body:not(.light-mode) .add-task-btn:hover {
+    background-color: lighten(var(--dark-accent-light), 5%); /* Needs SASS/calc or manual adjustment */
+    background-color: #628aa7; /* Manual adjustment of #537895 */
+    box-shadow: 0 3px 8px rgba(var(--dark-shadow-color), 0.4);
+    transform: translateY(-1px);
+}
+body:not(.light-mode) .add-task-btn:active {
+    transform: translateY(0px);
+    box-shadow: 0 1px 3px rgba(var(--dark-shadow-color), 0.3);
 }
 
 body.light-mode .add-task-btn {
-    background-color: #007bff; /* Primary blue */
-    backdrop-filter: none;
-    color: white;
-    border: 1px solid #007bff;
-    box-shadow: none;
+    background-color: var(--light-accent-dark);
+    color: var(--light-text);
+    box-shadow: 0 2px 5px var(--light-shadow-color);
 }
-
 body.light-mode .add-task-btn:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+    background-color: darken(var(--light-accent-dark), 5%); /* Needs SASS/calc or manual adjustment */
+    background-color: #98a8b8; /* Manual adjustment of #a8b8c8 */
+    box-shadow: 0 3px 8px var(--light-shadow-color);
+    transform: translateY(-1px);
 }
-
 body.light-mode .add-task-btn:active {
-    background-color: #0056b3;
-    transform: translateY(1px);
-}
-
-body.light-mode .add-task-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5);
-}
-
-body.light-mode .tasks::-webkit-scrollbar-track {
-  background: #e9ecef; /* Light track */
-}
-
-body.light-mode .tasks::-webkit-scrollbar-thumb {
-  background-color: #ced4da; /* Grey thumb */
-  border: 2px solid #e9ecef;
-}
-
-body.light-mode .tasks::-webkit-scrollbar-thumb:hover {
-  background-color: #adb5bd; /* Darker grey on hover */
-}
-
-body.light-mode .task:active {
-    cursor: grabbing;
-    background-color: #f8f9fa; /* Slightly off-white when dragging */
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-body.light-mode .task .edit-task-btn,
-body.light-mode .task.editing .edit-task-btn {
-    color: #007bff; /* Blue for edit/save */
-    background-color: rgba(0, 123, 255, 0.1); /* Light blue tint background */
-    border: 1px solid rgba(0, 123, 255, 0.2);
-    backdrop-filter: none;
-}
-body.light-mode .task .edit-task-btn:hover,
-body.light-mode .task.editing .edit-task-btn:hover {
-    color: #0056b3;
-    background-color: rgba(0, 123, 255, 0.2);
-    border-color: rgba(0, 123, 255, 0.4);
-}
-/* Explicitly make save icon green */
-body.light-mode .task.editing .edit-task-btn {
-    color: #28a745; /* Green for save */
-    background-color: rgba(40, 167, 69, 0.1);
-    border-color: rgba(40, 167, 69, 0.2);
-}
-body.light-mode .task.editing .edit-task-btn:hover {
-    color: #1e7e34;
-    background-color: rgba(40, 167, 69, 0.2);
-    border-color: rgba(40, 167, 69, 0.4);
+    transform: translateY(0px);
+    box-shadow: 0 1px 3px var(--light-shadow-color);
 }
 
 
-body.light-mode .task .delete-task-btn {
-    color: #dc3545; /* Red for delete */
-    background-color: rgba(220, 53, 69, 0.1); /* Light red tint background */
-    border: 1px solid rgba(220, 53, 69, 0.2);
-    backdrop-filter: none;
+.drag-over { /* When dragging over a column */
+    border-style: dashed;
+    border-width: 2px;
 }
-body.light-mode .task .delete-task-btn:hover {
-    color: #c82333;
-    background-color: rgba(220, 53, 69, 0.2);
-    border-color: rgba(220, 53, 69, 0.4);
+body:not(.light-mode) .drag-over {
+    background-color: rgba(var(--dark-accent-light), 0.1);
+    border-color: var(--dark-accent-light);
 }
-
-body.light-mode .edit-task-textarea {
-    background-color: #fff;
-    color: #495057;
-    border: 1px solid #ced4da;
-}
-
-body.light-mode .edit-task-textarea:focus {
-    border-color: #80bdff;
-    background-color: #fff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-}
-
 body.light-mode .drag-over {
-    background-color: #dee2e6; /* Light grey overlay */
-    border: 2px dashed #6c757d; /* Dashed grey border */
+    background-color: rgba(var(--light-accent-dark), 0.1);
+    border-color: var(--light-accent-dark);
 }
 
-body.light-mode .dragging {
-    opacity: 0.9; /* Less opacity for light mode dragging */
-    background-color: #f8f9fa;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.dragging { /* The task card being dragged */
+    opacity: 0.8; /* Slightly more visible than before */
+    transform: rotate(3deg) scale(1.03); /* Tilt and slight scale */
 }
+body:not(.light-mode) .dragging {
+    box-shadow: 0 8px 20px rgba(var(--dark-shadow-color), 0.5);
+}
+body.light-mode .dragging {
+    box-shadow: 0 8px 20px var(--light-shadow-color);
+}
+
+/* Scrollbar styling for .tasks already handled by global ::-webkit-scrollbar in style.css */
+/* Remove specific .tasks::-webkit-scrollbar if they exist, or ensure they complement global */
 
 
 /* Responsive Styles for Board Page */
+@media (max-width: 1024px) { /* Adjust breakpoint for wider columns */
+    .kanban-board {
+        flex-direction: row; /* Keep as row for tablets */
+        overflow-x: auto; /* Allow horizontal scrolling for columns */
+        justify-content: flex-start; /* Align columns to the start */
+        padding-bottom: 20px; /* Space for scrollbar */
+        gap: 20px;
+    }
+    .column {
+        flex-shrink: 0; /* Prevent columns from shrinking */
+        width: 300px; /* Fixed width for scrolling */
+        max-height: calc(100vh - 180px); /* Adjust for smaller screens */
+    }
+}
+
 @media (max-width: 768px) {
-    /* body on board page might not need padding adjustment if fixed top-bar handles it */
-    /* but if padding:20px is desired universally for mobile: */
-    /* body { padding: 20px; } */
+    .top-bar-container { padding: 10px 15px; }
+    .board-header { margin-top: 80px; margin-bottom: 25px; } /* Adjust for smaller top bar */
+    #board-name-display, #board-name-input { font-size: 2em; }
 
     .kanban-board {
-        flex-direction: column;
-        align-items: center;
-        gap: 15px;
+        flex-direction: column; /* Stack columns vertically */
+        align-items: center; /* Center columns */
+        overflow-x: hidden; /* No horizontal scroll for stacked columns */
+        gap: 20px;
+        padding: 0 10px; /* Reduce padding */
     }
 
     .column {
-        width: 90%;
-        margin-bottom: 20px;
-        background-color: #1A1225; /* Solid dark violet/purple */
-        backdrop-filter: none;
-        border: 1px solid #2A2035;
+        width: 100%; /* Full width for stacked columns */
+        max-width: 450px; /* Max width on small screens */
+        margin-bottom: 20px; /* Space between stacked columns */
+        /* Keep existing glass effect from base styles */
+        max-height: 60vh; /* Allow more vertical space per column */
     }
 
-    .task {
-        background-color: #281A38;
-        backdrop-filter: none;
-        border: 1px solid #3D2C4F;
+    /* For mobile, could simplify glass effect if performance is an issue, but current variables should be fine */
+    /* Example: less blur or more opaque backgrounds for mobile if needed */
+    body:not(.light-mode) .column {
+        /* background-color: var(--dark-accent); Slightly more solid */
+        /* backdrop-filter: blur(5px); Less blur */
     }
-
-    .new-task-input {
-        background-color: #150C20;
-        border: 1px solid #2A2035;
-    }
-
-    .new-task-input:focus {
-        border-color: #4A3B5C;
-    }
-
-    .add-task-btn {
-        background-color: #281A38;
-        backdrop-filter: none;
-        border: 1px solid #3D2C4F;
-    }
-
-    .add-task-btn:hover {
-        background-color: #3D2C4F;
-        border-color: #504060;
-    }
-
-    .add-task-btn:active {
-        background-color: #1E1526;
-    }
-
-    .add-task-btn:focus {
-        background-color: #352545;
-        border-color: #504060;
-    }
-
-    .tasks {
-        background-color: #100815;
-        scrollbar-color: #4A3B5C #1A1225;
-    }
-
-    .tasks::-webkit-scrollbar-track {
-        background: #1A1225;
-    }
-
-    .tasks::-webkit-scrollbar-thumb {
-        background-color: #4A3B5C;
-        border: 2px solid #1A1225;
-    }
-
-    .tasks::-webkit-scrollbar-thumb:hover {
-        background-color: #5A4B6C;
-    }
+    .new-task-input, .add-task-btn { font-size: 1em; }
 }
