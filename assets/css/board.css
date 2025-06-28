@@ -78,43 +78,47 @@ body.light-mode .home-button:hover svg { fill: var(--light-text); }
 /* Board Header Styles */
 .board-header {
     display: flex;
-    align-items: center;
+    align-items: center; /* Key for vertical alignment of children */
     justify-content: center;
-    margin-top: 100px; /* Increased space for fixed top-bar with padding */
-    margin-bottom: 40px; /* More space */
-    position: relative; /* For icon positioning */
+    margin-top: 100px;
+    margin-bottom: 40px;
+    position: relative;
+    gap: 10px; /* Spacing between title and icon, replaces icon's margin-left */
 }
 
 #board-name-display {
-    font-size: 2.4em; /* Larger board name */
+    display: inline-flex; /* Treat as inline-level flex container */
+    align-items: center;   /* Center text vertically within its own box */
+    font-size: 2.4em;
     font-weight: 700;
     padding: 8px 15px;
     border-radius: 8px;
     transition: background-color var(--transition-fast), color var(--transition-fast);
     cursor: pointer;
     color: var(--dark-text);
-    box-sizing: border-box; /* Add for layout stability */
-    text-shadow: 0 0 0 transparent; /* Attempt to stabilize text rendering */
+    box-sizing: border-box;
+    text-shadow: 0 0 0 transparent;
+    line-height: 1.2; /* Explicit line-height for stability */
 }
 body.light-mode #board-name-display { color: var(--light-text); }
 
 #board-name-display:hover {
-    background-color: rgba(255, 255, 255, 0.08); /* Subtle hover for dark */
+    background-color: rgba(255, 255, 255, 0.08);
 }
 body.light-mode #board-name-display:hover {
-    background-color: rgba(0, 0, 0, 0.05); /* Subtle hover for light */
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .edit-board-icon {
-    /* display: none; Initially hidden by JS */
-    margin-left: 12px;
+    /* display: none; Initially hidden by JS. JS sets 'inline-block' when showing. */
+    /* margin-left: 12px; /* Replaced by gap on .board-header */
     cursor: pointer;
-    transition: color var(--transition-fast), opacity var(--transition-fast); /* Added opacity to transition */
-    opacity: 0.6; /* Make it less prominent initially */
-    display: inline-flex; /* CSS preference, but JS might set inline-block */
+    transition: color var(--transition-fast), opacity var(--transition-fast);
+    opacity: 0.6;
+    display: inline-flex; /* Ensures this span is also a flex container */
     align-items: center;   /* Vertically center SVG *within* this span */
     justify-content: center; /* Horizontally center SVG *within* this span */
-    align-self: center; /* Crucial: tell this flex item to center itself in the cross-axis of .board-header */
+    /* align-self: center; /* Not needed if parent uses align-items: center and this item behaves well */
 }
 .edit-board-icon:hover { opacity: 1; }
 
