@@ -234,6 +234,8 @@ body.light-mode .tasks {
     position: relative; /* For action buttons */
     transition: background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
     overflow: hidden; /* Ensures buttons with absolute positioning don't overflow weirdly during edit */
+    width: 100%; /* Make task take full width of its container (.tasks) */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 body:not(.light-mode) .task {
     background-color: rgba(var(--dark-accent), 0.5); /* Use accent with alpha */
@@ -295,15 +297,15 @@ body.light-mode .task:hover {
     justify-content: center;
     border-radius: 50%;
     transition: background-color var(--transition-fast);
-    width: 28px; /* Explicit width */
-    height: 28px; /* Explicit height */
+    width: 32px; /* Increased button size */
+    height: 32px; /* Increased button size */
 }
 
 .task-action-btn svg {
-    width: 16px; /* Maintain SVG size */
-    height: 16px;
-    stroke-width: 2.2; /* Slightly thinner for a cleaner look */
-    transition: stroke var(--transition-fast); /* Transition stroke color */
+    width: 18px; /* Increased SVG icon size */
+    height: 18px; /* Increased SVG icon size */
+    stroke-width: 2.2;
+    transition: stroke var(--transition-fast);
 }
 
 /* Default Dark Theme Colors for Action Buttons */
