@@ -212,41 +212,61 @@ document.addEventListener('DOMContentLoaded', () => {
         task.setAttribute('draggable', 'true');
         task.id = taskId || generateId();
 
+        // SVG Icons
+        const iconEditSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>';
+        const iconSaveSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        const iconDeleteSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+
         // Create a span for the task text
         const textSpan = document.createElement('span');
         textSpan.classList.add('task-text-content');
         textSpan.textContent = taskText;
         task.appendChild(textSpan);
 
-        const editBtn = document.createElement('span');
-        editBtn.classList.add('edit-task-btn');
-        editBtn.innerHTML = '&#9998;'; // Pencil icon
+        // Create .task-actions container
+        const actionsContainer = document.createElement('div');
+        actionsContainer.classList.add('task-actions');
+
+        const editBtn = document.createElement('button');
+        editBtn.classList.add('task-action-btn', 'edit-task-btn');
+        editBtn.setAttribute('aria-label', 'Edit Task');
+        editBtn.innerHTML = iconEditSVG;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('task-action-btn', 'delete-task-btn');
+        deleteBtn.setAttribute('aria-label', 'Delete Task');
+        deleteBtn.innerHTML = iconDeleteSVG;
+
         editBtn.addEventListener('click', () => {
             if (task.classList.contains('editing')) {
                 // Currently in edit mode, so save
                 const textarea = task.querySelector('.edit-task-textarea');
                 textSpan.textContent = textarea.value;
-                task.replaceChild(textSpan, textarea);
+                task.replaceChild(textSpan, textarea); // textSpan was detached, re-attach
                 task.classList.remove('editing');
-                task.classList.remove('task-editing-state'); // Remove state class
-                editBtn.innerHTML = '&#9998;'; // Pencil icon
-                deleteBtn.style.display = ''; // Restore default display behavior for delete button
-                task.setAttribute('draggable', 'true'); // Re-enable dragging
-                saveTasksToBoardData(); // UPDATED
+                task.classList.remove('task-editing-state');
+                editBtn.innerHTML = iconEditSVG; // Change back to Pencil icon
+                editBtn.setAttribute('aria-label', 'Edit Task');
+                // deleteBtn is already part of actionsContainer, its display is handled by CSS .task.editing rules
+                task.setAttribute('draggable', 'true');
+                saveTasksToBoardData();
             } else {
                 // Not in edit mode, so switch to edit
                 const currentText = textSpan.textContent;
                 const textarea = document.createElement('textarea');
                 textarea.classList.add('edit-task-textarea');
                 textarea.value = currentText;
-                task.replaceChild(textarea, textSpan);
+                // Replace textSpan with textarea. textSpan will be re-added on save.
+                task.insertBefore(textarea, textSpan); // Insert before textSpan
+                textSpan.remove(); // Remove textSpan while editing
+
                 task.classList.add('editing');
-                task.classList.add('task-editing-state'); // Add state class
-                editBtn.innerHTML = '&#10004;'; // Checkmark icon for Save
-                deleteBtn.style.display = 'none'; // Hide delete button
-                task.setAttribute('draggable', 'false'); // Disable dragging while editing
+                task.classList.add('task-editing-state');
+                editBtn.innerHTML = iconSaveSVG; // Change to Save icon
+                editBtn.setAttribute('aria-label', 'Save Task');
+                // deleteBtn display is handled by CSS: .task.editing .task-actions .delete-task-btn { display: none; }
+                task.setAttribute('draggable', 'false');
                 textarea.focus();
-                // Auto-adjust textarea height
                 textarea.style.height = 'auto';
                 textarea.style.height = (textarea.scrollHeight) + 'px';
                 textarea.addEventListener('input', () => {
@@ -256,16 +276,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const deleteBtn = document.createElement('span');
-        deleteBtn.classList.add('delete-task-btn');
-        deleteBtn.textContent = 'X';
         deleteBtn.addEventListener('click', () => {
             task.remove();
-            saveTasksToBoardData(); // UPDATED
+            saveTasksToBoardData();
         });
 
-        task.appendChild(editBtn);
-        task.appendChild(deleteBtn);
+        actionsContainer.appendChild(editBtn);
+        actionsContainer.appendChild(deleteBtn);
+        task.appendChild(actionsContainer);
 
         task.addEventListener('dragstart', (e) => {
             if (task.classList.contains('editing')) {
