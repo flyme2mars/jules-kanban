@@ -94,6 +94,7 @@ body.light-mode .home-button:hover svg { fill: var(--light-text); }
     cursor: pointer;
     color: var(--dark-text);
     box-sizing: border-box; /* Add for layout stability */
+    text-shadow: 0 0 0 transparent; /* Attempt to stabilize text rendering */
 }
 body.light-mode #board-name-display { color: var(--light-text); }
 
@@ -110,9 +111,10 @@ body.light-mode #board-name-display:hover {
     cursor: pointer;
     transition: color var(--transition-fast), opacity var(--transition-fast); /* Added opacity to transition */
     opacity: 0.6; /* Make it less prominent initially */
-    display: inline-flex; /* For better alignment of SVG inside */
-    align-items: center;   /* Vertically center SVG inside the span */
-    justify-content: center; /* Horizontally center SVG (though less critical for single SVG) */
+    display: inline-flex; /* CSS preference, but JS might set inline-block */
+    align-items: center;   /* Vertically center SVG *within* this span */
+    justify-content: center; /* Horizontally center SVG *within* this span */
+    align-self: center; /* Crucial: tell this flex item to center itself in the cross-axis of .board-header */
 }
 .edit-board-icon:hover { opacity: 1; }
 
