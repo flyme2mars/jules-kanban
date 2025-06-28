@@ -238,26 +238,26 @@ body.light-mode .tasks {
     box-sizing: border-box; /* Ensure padding and border are included in the width */
 }
 body:not(.light-mode) .task {
-    background-color: rgba(var(--dark-accent), 0.5); /* Use accent with alpha */
+    background-color: rgba(var(--dark-accent), 0.6); /* Slightly more opaque */
     backdrop-filter: blur(5px);
     color: var(--dark-text);
-    border: 1px solid rgba(var(--dark-glass-border), 0.7);
+    border: 1px solid var(--dark-glass-border); /* More visible border */
     box-shadow: 0 2px 5px rgba(var(--dark-shadow-color), 0.5);
 }
 body:not(.light-mode) .task:hover {
-    border-color: var(--dark-accent-light);
-    background-color: rgba(var(--dark-accent), 0.7);
+    border-color: var(--dark-accent-light); /* Keep existing hover */
+    background-color: rgba(var(--dark-accent), 0.75); /* Slightly more opaque on hover too */
 }
 
 body.light-mode .task {
-    background-color: rgba(255,255,255,0.8); /* More opaque white */
+    background-color: rgba(255,255,255,0.9); /* More opaque white */
     color: var(--light-text);
-    border: 1px solid var(--light-glass-border);
+    border: 1px solid rgba(0, 0, 0, 0.15); /* Darker, more visible border */
     box-shadow: 0 2px 4px var(--light-shadow-color);
 }
 body.light-mode .task:hover {
-    border-color: var(--light-accent-dark);
-    background-color: #fff; /* Solid white on hover */
+    border-color: var(--light-accent-dark); /* Keep existing hover */
+    background-color: #ffffff; /* Solid white on hover - this is good */
 }
 
 /* Task Action Buttons (Edit/Delete) - Modernized */
@@ -348,10 +348,10 @@ body.light-mode .delete-task-btn:hover { background-color: rgba(var(--danger-col
 
 .edit-task-textarea {
     width: 100%; /* Takes full width of task content area */
-    padding: 10px; /* Match task padding */
-    margin: -12px -15px; /* Counteract task padding to fill it */
+    padding: 10px; /* Default padding for the textarea content */
+    /* margin: -12px -15px; Removed negative margins */
     border: none; /* Remove default border */
-    border-radius: 8px; /* Match task radius */
+    border-radius: 8px; /* Match task radius if task.editing has padding 0, otherwise it might look off */
     background-color: transparent; /* Blends with task */
     color: inherit; /* Inherit from .task */
     box-sizing: border-box;
