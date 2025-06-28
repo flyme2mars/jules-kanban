@@ -93,6 +93,7 @@ body.light-mode .home-button:hover svg { fill: var(--light-text); }
     transition: background-color var(--transition-fast), color var(--transition-fast);
     cursor: pointer;
     color: var(--dark-text);
+    box-sizing: border-box; /* Add for layout stability */
 }
 body.light-mode #board-name-display { color: var(--light-text); }
 
@@ -107,8 +108,11 @@ body.light-mode #board-name-display:hover {
     /* display: none; Initially hidden by JS */
     margin-left: 12px;
     cursor: pointer;
-    transition: color var(--transition-fast);
+    transition: color var(--transition-fast), opacity var(--transition-fast); /* Added opacity to transition */
     opacity: 0.6; /* Make it less prominent initially */
+    display: inline-flex; /* For better alignment of SVG inside */
+    align-items: center;   /* Vertically center SVG inside the span */
+    justify-content: center; /* Horizontally center SVG (though less critical for single SVG) */
 }
 .edit-board-icon:hover { opacity: 1; }
 
